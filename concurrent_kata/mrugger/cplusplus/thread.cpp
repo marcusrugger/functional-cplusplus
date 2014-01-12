@@ -15,7 +15,7 @@ void mythread::set_max_tree_depth(void)
 }
 
 
-mythread::mythread(thread_callback func, std::list<int> &acc, const sequencer &seq, int tree_depth)
+mythread::mythread(thread_callback func, accumulator &acc, const sequencer &seq, int tree_depth)
 : _func(func),
   _acc(acc),
   _seq(seq),

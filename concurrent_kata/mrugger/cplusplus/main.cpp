@@ -23,7 +23,7 @@ int match_count(const int count, const char_iterator &char_it, const char val)
 }
 
 
-void for_each(std::list<int> &acc, const sequence_iterator &s_it, const std::function<int(const char_iterator &)> fn)
+void for_each(accumulator &acc, const sequence_iterator &s_it, const std::function<int(const char_iterator &)> fn)
 {
   if (fn(s_it()))
     acc.push_back(s_it.to_i());
@@ -33,19 +33,19 @@ void for_each(std::list<int> &acc, const sequence_iterator &s_it, const std::fun
 }
 
 
-void split_sequence(std::list<int> &acc, const sequencer &seq, const int count)
+void split_sequence(accumulator &acc, const sequencer &seq, const int count)
 {
   if (seq.length() > 256)
   {
     sequencer seq_front = seq.clone_front_half();
     mythread t(split_sequence, acc, seq_front, count+1);
 
-    std::list<int> back_acc;
+    accumulator back_acc;
     sequencer seq_back = seq.clone_back_half();
     split_sequence(back_acc, seq_back, count+1);
 
     t.join();
-    acc.splice(acc.end(), back_acc);
+    acc.insert(acc.end(), back_acc.begin(), back_acc.end());
   }
   else
   {
@@ -57,7 +57,7 @@ void split_sequence(std::list<int> &acc, const sequencer &seq, const int count)
 }
 
 
-static void print_list(const std::list<int> &list)
+static void print_list(const accumulator &list)
 {
   std::time_t tt = std::chrono::system_clock::to_time_t(std::chrono::system_clock::now());
   std::cout << "Application done: " << ctime(&tt);
@@ -71,10 +71,13 @@ static void print_list(const std::list<int> &list)
 int main(int argc, char **argv)
 {
   mythread::set_max_tree_depth();
+  const int replications = 1000000;
 
   std::string str("8745648184845171326578518184151512461752149647129746915414816354846454");
-  sequencer seq(str, 1000000);
-  std::list<int> acc;
+  sequencer seq(str, replications);
+  accumulator acc;
+  acc.reserve(4 * replications);
+  std::cout << "vector capacity: " << acc.capacity() << std::endl;
   split_sequence(acc, seq, 0);
 
   print_list(acc);
