@@ -3,7 +3,7 @@
 
 
 char char_iterator::operator()(void) const
-{ return _sequencer(_idx); }
+{ return _sequencer(_idx) - '0'; }
 
 
 bool char_iterator::is_more(void) const

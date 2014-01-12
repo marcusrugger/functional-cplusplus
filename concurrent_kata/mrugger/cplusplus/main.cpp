@@ -9,33 +9,26 @@
 #include "sequencer.h"
 
 
-int match_count(const int count, const char_iterator &char_it, const char val)
+void match_count(accumulator &acc, const int count, const char_iterator &char_it, const char val)
 {
-  const int new_val = val - char_it();
-  if (new_val < 0)
-    return 0;
+  const char new_val = val - char_it();
+  if (new_val > 0 && char_it.is_more())
+    match_count(acc, count+1, char_it.next(), new_val);
   else if (new_val == 0)
-    return count;
-  else if (char_it.is_more())
-    return match_count(count+1, char_it.next(), new_val);
-  else
-    return 0;
+    acc.push_back(match_pair(char_it.to_i(), count+1));
 }
 
 
-void for_each(accumulator &acc, const sequence_iterator &s_it, const std::function<int(const char_iterator &)> fn)
+void for_each(accumulator &acc, const sequence_iterator &s_it, const std::function<void(accumulator &, const char_iterator &)> fn)
 {
-  if (fn(s_it()))
-    acc.push_back(s_it.to_i());
-
-  if (s_it.is_more())
-    for_each(acc, s_it.next(), fn);
+  fn(acc, s_it());
+  if (s_it.is_more()) for_each(acc, s_it.next(), fn);
 }
 
 
 void split_sequence(accumulator &acc, const sequencer &seq, const int count)
 {
-  if (seq.length() > 256)
+  if (seq.length() > 512)
   {
     sequencer seq_front = seq.clone_front_half();
     mythread t(split_sequence, acc, seq_front, count+1);
@@ -50,21 +43,28 @@ void split_sequence(accumulator &acc, const sequencer &seq, const int count)
   else
   {
     sequence_iterator seq_it = seq.get_sequence_iterator();
-    for_each(acc, seq_it, [](const char_iterator &char_it) -> int {
-      return char_it.is_more() ? match_count(0, char_it.next(), char_it()) : 0;
+    for_each(acc, seq_it, [](accumulator &acc, const char_iterator &char_it) -> int {
+      if (char_it.is_more()) match_count(acc, 1, char_it.next(), char_it());
     });
   }
 }
 
 
-static void print_list(const accumulator &list)
+static void print_match(const match_pair p, const sequencer &seq)
+{
+  const sequencer block = seq.clone_block(p.first, p.second);
+  printf("Position: %3d, characters: %d, %s\n", p.first, p.second, block.to_s().c_str());
+}
+
+
+static void print_list(const accumulator &list, const sequencer &seq)
 {
   std::time_t tt = std::chrono::system_clock::to_time_t(std::chrono::system_clock::now());
   std::cout << "Application done: " << ctime(&tt);
   std::cout << "list size: " << list.size() << std::endl;
 
   std::for_each(list.begin(), std::next(list.begin(), 10),
-                [](int x) {std::cout << x << std::endl;} );
+                [seq](match_pair p) { print_match(p, seq); } );
 }
 
 
@@ -80,5 +80,5 @@ int main(int argc, char **argv)
   std::cout << "vector capacity: " << acc.capacity() << std::endl;
   split_sequence(acc, seq, 0);
 
-  print_list(acc);
+  print_list(acc, seq);
 }

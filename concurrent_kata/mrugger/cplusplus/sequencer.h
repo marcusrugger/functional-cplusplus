@@ -27,7 +27,10 @@ public:
   sequence_iterator get_sequence_iterator(void) const;
   sequencer clone_front_half(void) const;
   sequencer clone_back_half() const;
+  sequencer clone_block(int start, int length) const;
   int length(void) const;
+
+  std::string to_s(void) const;
 
 
 private:
@@ -38,5 +41,7 @@ private:
     _start_idx(start),
     _end_idx(end)
   {}
+
+  void append_to_string(std::string &s, int idx, int count) const;
 
 };

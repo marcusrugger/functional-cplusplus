@@ -5,4 +5,5 @@
 #include "thread.h"
 
 
-typedef std::vector<int> accumulator;
+typedef std::pair<int, int> match_pair;
+typedef std::vector<match_pair> accumulator;
