@@ -12,15 +12,16 @@ private:
   const sequencer &_sequencer;
   const int _idx;
   const int _end_idx;
+  const bool _is_more;
 
 public:
 
   char_iterator(const sequencer &seq, int idx, int end_idx)
-  : _sequencer(seq), _idx(idx), _end_idx(end_idx)
+  : _sequencer(seq), _idx(idx), _end_idx(end_idx), _is_more(_idx > _end_idx)
   {}
 
   char_iterator(const char_iterator &other)
-  : _sequencer(other._sequencer), _idx(other._idx), _end_idx(other._end_idx)
+  : _sequencer(other._sequencer), _idx(other._idx), _end_idx(other._end_idx), _is_more(_idx < _end_idx)
   {}
 
   char operator()(void) const;
@@ -38,11 +39,12 @@ private:
   const sequencer &_sequencer;
   const int _idx;
   const int _end_idx;
+  const bool _is_more;
 
 public:
 
   sequence_iterator(const sequencer &seq, int idx, int end_idx)
-  : _sequencer(seq), _idx(idx), _end_idx(end_idx)
+  : _sequencer(seq), _idx(idx), _end_idx(end_idx), _is_more(_idx < _end_idx)
   {}
 
 

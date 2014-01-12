@@ -7,7 +7,7 @@ char char_iterator::operator()(void) const
 
 
 bool char_iterator::is_more(void) const
-{ return _idx > _end_idx; }
+{ return _is_more; }
 
 
 char_iterator char_iterator::next(void) const
@@ -23,7 +23,7 @@ char_iterator sequence_iterator::operator()(void) const
 
 
 bool sequence_iterator::is_more(void) const
-{ return _idx < _end_idx; }
+{ return _is_more; }
 
 
 sequence_iterator sequence_iterator::next(void) const
