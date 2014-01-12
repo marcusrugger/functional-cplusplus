@@ -3,11 +3,13 @@
 #include <list>
 #include <ctime>
 #include <chrono>
+#include <iterator>
+#include <algorithm>
 #include "thread.h"
 #include "sequencer.h"
 
 
-int match_count(int count, const char_iterator char_it, char val)
+int match_count(int count, const char_iterator &char_it, char val)
 {
   char c = char_it();
   if (c)
@@ -25,7 +27,7 @@ int match_count(int count, const char_iterator char_it, char val)
 }
 
 
-std::list<int> for_each_apply_match_count(const sequence_iterator seq_it)
+std::list<int> for_each_apply_match_count(const sequence_iterator &seq_it)
 {
   std::list<int> list;
 
@@ -71,10 +73,8 @@ static void print_list(std::list<int> &list)
   std::cout << "Application done: " << ctime(&tt);
   std::cout << "list size: " << list.size() << std::endl;
 
-  std::list<int>::iterator it;
-  int max_print = 10;
-  for (it = list.begin(); max_print > 0 && it != list.end(); it++, max_print--)
-    std::cout << *it << std::endl;
+  std::for_each(list.begin(), std::next(list.begin(), 10),
+                [](int x) {std::cout << x << std::endl;} );
 }
 
 
