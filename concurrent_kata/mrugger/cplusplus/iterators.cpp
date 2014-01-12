@@ -6,8 +6,12 @@ char char_iterator::operator()(void) const
 { return _sequencer(_idx); }
 
 
+bool char_iterator::is_more(void) const
+{ return _idx > _end_idx; }
+
+
 char_iterator char_iterator::next(void) const
-{ return char_iterator(_sequencer, _idx-1); }
+{ return char_iterator(_sequencer, _idx-1, _end_idx); }
 
 
 int char_iterator::to_i(void) const
@@ -15,11 +19,15 @@ int char_iterator::to_i(void) const
 
 
 char_iterator sequence_iterator::operator()(void) const
-{ return char_iterator(_sequencer, _idx); }
+{ return char_iterator(_sequencer, _idx, 0); }
+
+
+bool sequence_iterator::is_more(void) const
+{ return _idx < _end_idx; }
 
 
 sequence_iterator sequence_iterator::next(void) const
-{ return sequence_iterator(_sequencer, _idx+1); }
+{ return sequence_iterator(_sequencer, _idx+1, _end_idx); }
 
 
 int sequence_iterator::to_i(void) const

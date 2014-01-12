@@ -11,35 +11,24 @@
 
 int match_count(int count, const char_iterator &char_it, char val)
 {
-  char c = char_it();
-  if (c)
-  {
-    val -= c;
-    if (val < 0)
-      return 0;
-    else if (val == 0)
-      return count;
-    else
-      return match_count(count+1, char_it.next(), val);
-  }
+  int new_val = val - char_it();
+  if (new_val < 0)
+    return 0;
+  else if (new_val == 0)
+    return count;
+  else if (char_it.is_more())
+    return match_count(count+1, char_it.next(), new_val);
   else
     return 0;
 }
 
 
-std::list<int> for_each_apply_match_count(const sequence_iterator &seq_it)
+std::list<int> for_each(const sequence_iterator &s_it, std::function<int(const char_iterator &)> fn)
 {
   std::list<int> list;
-
-  char_iterator char_it = seq_it();
-  char c = char_it();
-  if (c)
-  {
-    int cnt = match_count(1, char_it.next(), c);
-    if (cnt) list.push_back(seq_it.to_i());
-    list.splice(list.end(), for_each_apply_match_count(seq_it.next()));
-  }
-
+  const int cnt = fn(s_it());
+  if (cnt) list.push_back(s_it.to_i());
+  if (s_it.is_more()) list.splice(list.end(), for_each(s_it.next(), fn));
   return list;
 }
 
@@ -62,7 +51,9 @@ std::list<int> split_sequence(const sequencer &seq, int count)
   else
   {
     sequence_iterator seq_it = seq.get_sequence_iterator();
-    return for_each_apply_match_count(seq_it);
+    return for_each(seq_it, [](const char_iterator &char_it) -> int {
+      return char_it.is_more() ? match_count(0, char_it.next(), char_it()) : 0;
+    });
   }
 }
 

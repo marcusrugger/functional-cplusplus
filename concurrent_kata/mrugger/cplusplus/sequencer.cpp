@@ -11,7 +11,7 @@ char sequencer::operator()(int idx) const
 
 
 sequence_iterator sequencer::get_sequence_iterator(void) const
-{ return sequence_iterator((*this), _start_idx); }
+{ return sequence_iterator((*this), _start_idx, _end_idx); }
 
 
 sequencer sequencer::clone_front_half(void) const
