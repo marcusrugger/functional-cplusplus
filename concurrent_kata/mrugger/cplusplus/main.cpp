@@ -9,10 +9,10 @@
 #include "sequencer.h"
 
 
-static const accumulator process_sequence(const accumulator acc, const sequencer seq, const int depth);
+static const accumulator process_sequence(const accumulator &acc, const sequencer &seq, const int depth);
 
 
-static int match_count(const int count, const char_iterator char_it, const char val)
+static int match_count(const int count, const char_iterator &char_it, const char val)
 {
   const char new_val = val - char_it();
   if (new_val > 0 && char_it.is_more())
@@ -24,7 +24,7 @@ static int match_count(const int count, const char_iterator char_it, const char 
 }
 
 
-static const accumulator on_each(const accumulator acc, const char_iterator char_it)
+static const accumulator on_each(const accumulator &acc, const char_iterator &char_it)
 {
   if (char_it.is_more())
   {
@@ -40,7 +40,7 @@ static const accumulator on_each(const accumulator acc, const char_iterator char
 }
 
 
-static const accumulator fork_sequence(const accumulator acc, const sequencer seq, const int depth)
+static const accumulator fork_sequence(const accumulator &acc, const sequencer &seq, const int depth)
 {
   sequencer seq_front = seq.clone_front_half();
   mythread t(process_sequence, acc, seq_front, depth+1);
@@ -54,14 +54,14 @@ static const accumulator fork_sequence(const accumulator acc, const sequencer se
 }
 
 
-static const accumulator iterate_sequence(const accumulator acc, const sequencer seq)
+static const accumulator iterate_sequence(const accumulator &acc, const sequencer &seq)
 {
   sequence_iterator seq_it = seq.get_sequence_iterator();
   return seq_it.foreach<accumulator>(acc, on_each);
 }
 
 
-static const accumulator process_sequence(const accumulator acc, const sequencer seq, const int depth)
+static const accumulator process_sequence(const accumulator &acc, const sequencer &seq, const int depth)
 {
   if (seq.length() > 512)
     return fork_sequence(acc, seq, depth);
@@ -89,7 +89,7 @@ static void print_list(const accumulator &acc, const sequencer &seq)
 int main(const int argc, const char **argv)
 {
   mythread::set_max_tree_depth();
-  const int replications = 1000000;
+  const int replications = 10000000;
 
   std::string str("8745648184845171326578518184151512461752149647129746915414816354846454");
   sequencer seq(str, replications);

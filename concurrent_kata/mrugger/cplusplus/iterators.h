@@ -62,7 +62,7 @@ public:
   int to_i(void) const;
 
   template <typename T>
-  const T foreach(const T acc, const std::function<const T(const T, const char_iterator)> fn)
+  const T foreach(const T &acc, const std::function<const T(const T &, const char_iterator &)> fn)
   {
     const T new_acc = fn(acc, (*this)());
     if (is_more()) return next().foreach(new_acc, fn);
