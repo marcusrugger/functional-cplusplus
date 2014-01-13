@@ -47,7 +47,7 @@ std::string sequencer::to_s(void) const
 
 void sequencer::append_to_string(std::string &s, int idx, int count) const
 {
-  if (count > 0)
+  if (count > 0 && idx < _end_idx)
   {
     s.push_back((*this)(idx));
     append_to_string(s, idx+1, count-1);
