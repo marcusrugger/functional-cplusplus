@@ -25,9 +25,9 @@ public:
   : _sequencer(seq), _idx(idx), _end_idx(end_idx), _is_more(_idx > _end_idx)
   {}
 
-  char_iterator(const char_iterator &other)
-  : _sequencer(other._sequencer), _idx(other._idx), _end_idx(other._end_idx), _is_more(_idx < _end_idx)
-  {}
+//  char_iterator(const char_iterator &other)
+//  : _sequencer(other._sequencer), _idx(other._idx), _end_idx(other._end_idx), _is_more(_idx > _end_idx)
+//  {}
 
   char operator()(void) const;
   bool is_more(void) const;
@@ -58,6 +58,12 @@ public:
   sequence_iterator next(void) const;
   int to_i(void) const;
 
-  void foreach(accumulator &acc, const std::function<void(accumulator &, const char_iterator &)> fn);
+  template <typename T>
+  T foreach(const T acc, const std::function<T(const T, const char_iterator)> fn)
+  {
+    T new_acc = fn(acc, (*this)());
+    if (is_more()) return next().foreach(new_acc, fn);
+    return new_acc;
+  }
 
 };

@@ -30,10 +30,3 @@ sequence_iterator sequence_iterator::next(void) const
 
 int sequence_iterator::to_i(void) const
 { return _idx; }
-
-
-void sequence_iterator::foreach(accumulator &acc, const std::function<void(accumulator &, const char_iterator &)> fn)
-{
-  fn(acc, (*this)());
-  if (is_more()) next().foreach(acc, fn);
-}
