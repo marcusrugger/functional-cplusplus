@@ -4,10 +4,13 @@
 #include <vector>
 
 class sequencer;
+class shared_match_pair_accumulator;
+class unique_match_pair_accumulator;
 
 
 typedef std::pair<int, int> match_pair;
-typedef std::vector<match_pair> accumulator;
+typedef std::vector<match_pair> match_pair_vector;
+typedef shared_match_pair_accumulator accumulator;
 
 
 class char_iterator
@@ -59,9 +62,9 @@ public:
   int to_i(void) const;
 
   template <typename T>
-  T foreach(const T acc, const std::function<T(const T, const char_iterator)> fn)
+  const T foreach(const T acc, const std::function<const T(const T, const char_iterator)> fn)
   {
-    T new_acc = fn(acc, (*this)());
+    const T new_acc = fn(acc, (*this)());
     if (is_more()) return next().foreach(new_acc, fn);
     return new_acc;
   }

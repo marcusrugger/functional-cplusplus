@@ -9,10 +9,10 @@
 #include "sequencer.h"
 
 
-accumulator process_sequence(const accumulator acc, const sequencer seq, const int depth);
+static const accumulator process_sequence(const accumulator acc, const sequencer seq, const int depth);
 
 
-int match_count(const int count, const char_iterator char_it, const char val)
+static int match_count(const int count, const char_iterator char_it, const char val)
 {
   const char new_val = val - char_it();
   if (new_val > 0 && char_it.is_more())
@@ -24,7 +24,7 @@ int match_count(const int count, const char_iterator char_it, const char val)
 }
 
 
-accumulator on_each(const accumulator acc, const char_iterator char_it)
+static const accumulator on_each(const accumulator acc, const char_iterator char_it)
 {
   if (char_it.is_more())
   {
@@ -32,7 +32,7 @@ accumulator on_each(const accumulator acc, const char_iterator char_it)
     if (cnt)
     {
       accumulator new_acc = acc;
-      new_acc.push_back(match_pair(char_it.to_i(), cnt));
+      new_acc.append(match_pair(char_it.to_i(), cnt));
       return new_acc;
     }
   }
@@ -40,7 +40,7 @@ accumulator on_each(const accumulator acc, const char_iterator char_it)
 }
 
 
-accumulator fork_sequence(const accumulator acc, const sequencer seq, const int depth)
+static const accumulator fork_sequence(const accumulator acc, const sequencer seq, const int depth)
 {
   sequencer seq_front = seq.clone_front_half();
   mythread t(process_sequence, acc, seq_front, depth+1);
@@ -49,23 +49,19 @@ accumulator fork_sequence(const accumulator acc, const sequencer seq, const int 
   accumulator back_acc = process_sequence(accumulator(), seq_back, depth+1);
 
   accumulator new_acc = t.join();
-  new_acc.insert(new_acc.end(), back_acc.begin(), back_acc.end());
+  new_acc.append(back_acc);
   return new_acc;
 }
 
 
-accumulator iterate_sequence(const accumulator acc, const sequencer seq)
+static const accumulator iterate_sequence(const accumulator acc, const sequencer seq)
 {
   sequence_iterator seq_it = seq.get_sequence_iterator();
-  accumulator seq_acc = seq_it.foreach<accumulator>(acc, on_each);
-
-  accumulator new_acc;
-  new_acc.insert(new_acc.end(), seq_acc.begin(), seq_acc.end());
-  return new_acc;
+  return seq_it.foreach<accumulator>(acc, on_each);
 }
 
 
-accumulator process_sequence(const accumulator acc, const sequencer seq, const int depth)
+static const accumulator process_sequence(const accumulator acc, const sequencer seq, const int depth)
 {
   if (seq.length() > 512)
     return fork_sequence(acc, seq, depth);
@@ -74,8 +70,9 @@ accumulator process_sequence(const accumulator acc, const sequencer seq, const i
 }
 
 
-static void print_list(const accumulator &list, const sequencer &seq)
+static void print_list(const accumulator &acc, const sequencer &seq)
 {
+  const match_pair_vector &list = acc.get_vector();
   std::time_t tt = std::chrono::system_clock::to_time_t(std::chrono::system_clock::now());
   std::cout << "Application done: " << ctime(&tt);
   std::cout << "list size: " << list.size() << std::endl;
@@ -96,7 +93,7 @@ int main(const int argc, const char **argv)
 
   std::string str("8745648184845171326578518184151512461752149647129746915414816354846454");
   sequencer seq(str, replications);
-  accumulator acc = process_sequence(accumulator(), seq, 0);
+  const accumulator acc = process_sequence(accumulator(), seq, 0);
 
   print_list(acc, seq);
 }

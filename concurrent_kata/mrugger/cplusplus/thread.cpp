@@ -26,7 +26,7 @@ mythread::mythread(const thread_callback func, const accumulator acc, const sequ
 }
 
 
-accumulator mythread::join(void) const
+const accumulator mythread::join(void) const
 {
   if (_thread) _thread->join();
   return thread_return_accumulator;

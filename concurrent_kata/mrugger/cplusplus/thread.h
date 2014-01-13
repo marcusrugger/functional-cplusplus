@@ -6,7 +6,7 @@
 #include "main.h"
 
 
-typedef std::function<accumulator(const accumulator, const sequencer, int)> thread_callback;
+typedef std::function<const accumulator(const accumulator, const sequencer, int)> thread_callback;
 
 
 class mythread
@@ -18,7 +18,7 @@ public:
 
   mythread(const thread_callback func, const accumulator acc, const sequencer seq, int tree_depth);
 
-  accumulator join(void) const;
+  const accumulator join(void) const;
 
 
 private:
