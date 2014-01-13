@@ -1,10 +1,27 @@
 #include "sequencer.h"
 
 
+sequencer::sequencer(const std::string sequence, unsigned int replication_count)
+: _sequence(new char[sequence.length()]),
+  _sequence_length(sequence.length()),
+  _start_idx(0),
+  _end_idx(_sequence_length * replication_count)
+{
+  sequence.copy(_sequence.get(), _sequence_length);
+}
+
+sequencer::sequencer(const sequencer &other, int start, int end)
+: _sequence(other._sequence),
+  _sequence_length(other._sequence_length),
+  _start_idx(start),
+  _end_idx(end)
+{}
+
+
 char sequencer::operator()(int idx) const
 {
   if (idx >= 0 && idx < _end_idx)
-    return _sequence[idx % _sequence_length];
+    return _sequence.get()[idx % _sequence_length];
   else
     return '\0';
 }

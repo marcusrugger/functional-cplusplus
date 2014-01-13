@@ -1,5 +1,6 @@
 #pragma once
 #include <string>
+#include <memory>
 #include "iterators.h"
 
 
@@ -7,7 +8,7 @@ class sequencer
 {
 private:
 
-  const char *_sequence;
+  const std::shared_ptr<char> _sequence;
   const std::size_t _sequence_length;
 
   const int _start_idx;
@@ -15,12 +16,7 @@ private:
 
 public:
 
-  sequencer(const std::string sequence, unsigned int replication_count)
-  : _sequence(sequence.c_str()),
-    _sequence_length(sequence.length()),
-    _start_idx(0),
-    _end_idx(_sequence_length * replication_count)
-  {}
+  sequencer(const std::string sequence, unsigned int replication_count);
 
   char operator()(int idx) const;
 
@@ -35,12 +31,7 @@ public:
 
 private:
 
-  sequencer(const sequencer &other, int start, int end)
-  : _sequence(other._sequence),
-    _sequence_length(other._sequence_length),
-    _start_idx(start),
-    _end_idx(end)
-  {}
+  sequencer(const sequencer &other, int start, int end);
 
   void append_to_string(std::string &s, int idx, int count) const;
 
