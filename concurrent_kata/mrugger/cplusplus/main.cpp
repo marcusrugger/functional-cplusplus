@@ -50,20 +50,14 @@ void split_sequence(accumulator &acc, const sequencer &seq, const int count)
 }
 
 
-static void print_match(const match_pair p, const sequencer &seq)
-{
-  const sequencer block = seq.clone_block(p.first, p.second);
-  printf("Position: %3d, characters: %d, %s\n", p.first, p.second, block.to_s().c_str());
-}
-
-
 static void print_list(const accumulator &list, const sequencer &seq)
 {
   std::time_t tt = std::chrono::system_clock::to_time_t(std::chrono::system_clock::now());
   std::cout << "Application done: " << ctime(&tt);
   std::cout << "list size: " << list.size() << std::endl;
 
-  std::for_each(list.begin(), std::next(list.begin(), 10), [seq](match_pair p) {
+  std::for_each(list.begin(), std::next(list.begin(), 10), [seq](match_pair p)
+  {
     const sequencer block = seq.clone_block(p.first, p.second);
     printf("Position: %3d, characters: %d, %s\n", p.first, p.second, block.to_s().c_str());
   });
