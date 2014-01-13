@@ -19,13 +19,6 @@ void match_count(accumulator &acc, const int count, const char_iterator &char_it
 }
 
 
-void for_each(accumulator &acc, const sequence_iterator &s_it, const std::function<void(accumulator &, const char_iterator &)> fn)
-{
-  fn(acc, s_it());
-  if (s_it.is_more()) for_each(acc, s_it.next(), fn);
-}
-
-
 void split_sequence(accumulator &acc, const sequencer &seq, const int count)
 {
   if (seq.length() > 512)
@@ -43,7 +36,7 @@ void split_sequence(accumulator &acc, const sequencer &seq, const int count)
   else
   {
     sequence_iterator seq_it = seq.get_sequence_iterator();
-    for_each(acc, seq_it, [](accumulator &acc, const char_iterator &char_it) -> int {
+    seq_it.foreach(acc, [](accumulator &acc, const char_iterator &char_it) -> int {
       if (char_it.is_more()) match_count(acc, 1, char_it.next(), char_it());
     });
   }

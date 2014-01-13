@@ -1,8 +1,13 @@
 #pragma once
 #include <list>
 #include <functional>
+#include <vector>
 
 class sequencer;
+
+
+typedef std::pair<int, int> match_pair;
+typedef std::vector<match_pair> accumulator;
 
 
 class char_iterator
@@ -52,5 +57,7 @@ public:
   bool is_more(void) const;
   sequence_iterator next(void) const;
   int to_i(void) const;
+
+  void foreach(accumulator &acc, const std::function<void(accumulator &, const char_iterator &)> fn);
 
 };
