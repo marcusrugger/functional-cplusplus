@@ -64,9 +64,10 @@ public:
   template <typename T>
   const T foreach(const T &acc, const std::function<const T(const T &, const char_iterator &)> fn)
   {
-    const T new_acc = fn(acc, (*this)());
-    if (is_more()) return next().foreach(new_acc, fn);
-    return new_acc;
+    if (is_more())
+      return next().foreach(fn(acc, (*this)()), fn);
+    else
+      return fn(acc, (*this)());
   }
 
 };

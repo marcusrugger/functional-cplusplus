@@ -63,7 +63,7 @@ static const accumulator iterate_sequence(const accumulator &acc, const sequence
 
 static const accumulator process_sequence(const accumulator &acc, const sequencer &seq, const int depth)
 {
-  if (seq.length() > 512)
+  if (seq.length() > 1024)
     return fork_sequence(acc, seq, depth);
   else
     return iterate_sequence(acc, seq);
@@ -89,7 +89,7 @@ static void print_list(const accumulator &acc, const sequencer &seq)
 int main(const int argc, const char **argv)
 {
   mythread::set_max_tree_depth();
-  const int replications = 10000000;
+  const int replications = 1000;
 
   std::string str("8745648184845171326578518184151512461752149647129746915414816354846454");
   sequencer seq(str, replications);
