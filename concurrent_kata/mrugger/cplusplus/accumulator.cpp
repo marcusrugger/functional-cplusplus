@@ -1,19 +1,21 @@
 #include "main.h"
 
 
-/***** shared *****/
+/***** mutable *****/
 
 
-shared_match_pair_accumulator::shared_match_pair_accumulator(const shared_match_pair_accumulator &front,
-                                                             const match_pair &pair)
+mutable_match_pair_accumulator::mutable_match_pair_accumulator(
+  const mutable_match_pair_accumulator &front,
+  const match_pair &pair)
 : _accumulator(front._accumulator)
 {
   _accumulator->push_back(pair);
 }
 
 
-shared_match_pair_accumulator::shared_match_pair_accumulator(const shared_match_pair_accumulator &front,
-                                                             const shared_match_pair_accumulator &back)
+mutable_match_pair_accumulator::mutable_match_pair_accumulator(
+  const mutable_match_pair_accumulator &front,
+  const mutable_match_pair_accumulator &back)
 : _accumulator(front._accumulator)
 {
   _accumulator->insert(_accumulator->end(),
@@ -22,19 +24,19 @@ shared_match_pair_accumulator::shared_match_pair_accumulator(const shared_match_
 }
 
 
-shared_match_pair_accumulator shared_match_pair_accumulator::append(const match_pair &pair) const
+mutable_match_pair_accumulator mutable_match_pair_accumulator::append(const match_pair &pair) const
 {
-  return shared_match_pair_accumulator(*this, pair);
+  return mutable_match_pair_accumulator(*this, pair);
 }
 
 
-shared_match_pair_accumulator shared_match_pair_accumulator::append(const shared_match_pair_accumulator &acc) const
+mutable_match_pair_accumulator mutable_match_pair_accumulator::append(const mutable_match_pair_accumulator &acc) const
 {
-  return shared_match_pair_accumulator(*this, acc);
+  return mutable_match_pair_accumulator(*this, acc);
 }
 
 
-const match_pair_vector &shared_match_pair_accumulator::get_vector(void) const
+const match_pair_vector &mutable_match_pair_accumulator::get_vector(void) const
 {
   return *_accumulator;
 }

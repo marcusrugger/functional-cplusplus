@@ -4,7 +4,7 @@
 #include <vector>
 
 class sequencer;
-class shared_match_pair_accumulator;
+class mutable_match_pair_accumulator;
 class immutable_shared_match_pair_accumulator;
 class immutable_byvalue_match_pair_accumulator;
 
