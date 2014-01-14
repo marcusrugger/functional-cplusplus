@@ -5,12 +5,13 @@
 
 class sequencer;
 class shared_match_pair_accumulator;
-class immutable_match_pair_accumulator;
+class immutable_shared_match_pair_accumulator;
+class immutable_byvalue_match_pair_accumulator;
 
 
 typedef std::pair<int, int> match_pair;
 typedef std::vector<match_pair> match_pair_vector;
-typedef immutable_match_pair_accumulator accumulator;
+typedef immutable_shared_match_pair_accumulator accumulator;
 
 
 class char_iterator
