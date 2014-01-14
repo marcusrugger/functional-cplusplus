@@ -29,12 +29,7 @@ static const accumulator on_each(const accumulator &acc, const char_iterator &ch
   if (char_it.is_more())
   {
     const int cnt = match_count(1, char_it.next(), char_it());
-    if (cnt)
-    {
-      accumulator new_acc = acc;
-      new_acc.append(match_pair(char_it.to_i(), cnt));
-      return new_acc;
-    }
+    if (cnt) return acc.append(match_pair(char_it.to_i(), cnt));
   }
   return acc;
 }
@@ -48,9 +43,7 @@ static const accumulator fork_sequence(const accumulator &acc, const sequencer &
   sequencer seq_back = seq.clone_back_half();
   accumulator back_acc = process_sequence(accumulator(), seq_back, depth+1);
 
-  accumulator new_acc = t.join();
-  new_acc.append(back_acc);
-  return new_acc;
+  return t.join().append(back_acc);
 }
 
 

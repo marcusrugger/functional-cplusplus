@@ -1,15 +1,33 @@
 #include "main.h"
 
 
-void shared_match_pair_accumulator::append(const match_pair &pair)
+shared_match_pair_accumulator::shared_match_pair_accumulator(const shared_match_pair_accumulator &front,
+                                                             const match_pair &pair)
+: _accumulator(front._accumulator)
 {
   _accumulator->push_back(pair);
 }
 
 
-void shared_match_pair_accumulator::append(const shared_match_pair_accumulator &acc)
+shared_match_pair_accumulator::shared_match_pair_accumulator(const shared_match_pair_accumulator &front,
+                                                             const shared_match_pair_accumulator &back)
+: _accumulator(front._accumulator)
 {
-  _accumulator->insert(_accumulator->end(), acc._accumulator->begin(), acc._accumulator->end());
+  _accumulator->insert(_accumulator->end(),
+                       back._accumulator->begin(),
+                       back._accumulator->end());
+}
+
+
+shared_match_pair_accumulator shared_match_pair_accumulator::append(const match_pair &pair) const
+{
+  return shared_match_pair_accumulator(*this, pair);
+}
+
+
+shared_match_pair_accumulator shared_match_pair_accumulator::append(const shared_match_pair_accumulator &acc) const
+{
+  return shared_match_pair_accumulator(*this, acc);
 }
 
 
@@ -19,19 +37,39 @@ const match_pair_vector &shared_match_pair_accumulator::get_vector(void) const
 }
 
 
-void unique_match_pair_accumulator::append(const match_pair &pair)
+
+
+immutable_match_pair_accumulator::immutable_match_pair_accumulator(const immutable_match_pair_accumulator &front,
+                                                             const match_pair &pair)
+: _accumulator(front._accumulator)
 {
   _accumulator.push_back(pair);
 }
 
 
-void unique_match_pair_accumulator::append(const unique_match_pair_accumulator &acc)
+immutable_match_pair_accumulator::immutable_match_pair_accumulator(const immutable_match_pair_accumulator &front,
+                                                             const immutable_match_pair_accumulator &back)
+: _accumulator(front._accumulator)
 {
-  _accumulator.insert(_accumulator.end(), acc._accumulator.begin(), acc._accumulator.end());
+  _accumulator.insert(_accumulator.end(),
+                      back._accumulator.begin(),
+                      back._accumulator.end());
 }
 
 
-const match_pair_vector &unique_match_pair_accumulator::get_vector(void) const
+immutable_match_pair_accumulator immutable_match_pair_accumulator::append(const match_pair &pair) const
+{
+  return immutable_match_pair_accumulator(*this, pair);
+}
+
+
+immutable_match_pair_accumulator immutable_match_pair_accumulator::append(const immutable_match_pair_accumulator &acc) const
+{
+  return immutable_match_pair_accumulator(*this, acc);
+}
+
+
+const match_pair_vector &immutable_match_pair_accumulator::get_vector(void) const
 {
   return _accumulator;
 }

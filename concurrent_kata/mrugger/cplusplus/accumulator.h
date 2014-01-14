@@ -9,6 +9,9 @@ private:
 
   std::shared_ptr<match_pair_vector> _accumulator;
 
+  shared_match_pair_accumulator(const shared_match_pair_accumulator &front, const match_pair &pair);
+  shared_match_pair_accumulator(const shared_match_pair_accumulator &front, const shared_match_pair_accumulator &back);
+
 
 public:
 
@@ -20,32 +23,35 @@ public:
   : _accumulator(other._accumulator)
   {}
 
-  void append(const match_pair &p);
-  void append(const shared_match_pair_accumulator &acc);
+  shared_match_pair_accumulator append(const match_pair &p) const;
+  shared_match_pair_accumulator append(const shared_match_pair_accumulator &acc) const;
 
   const match_pair_vector &get_vector(void) const;
 
 };
 
 
-class unique_match_pair_accumulator
+class immutable_match_pair_accumulator
 {
 private:
 
   match_pair_vector _accumulator;
 
+  immutable_match_pair_accumulator(const immutable_match_pair_accumulator &front, const match_pair &pair);
+  immutable_match_pair_accumulator(const immutable_match_pair_accumulator &front, const immutable_match_pair_accumulator &back);
+
 
 public:
 
-  unique_match_pair_accumulator(void)
+  immutable_match_pair_accumulator(void)
   {}
 
-  unique_match_pair_accumulator(const unique_match_pair_accumulator &other)
+  immutable_match_pair_accumulator(const immutable_match_pair_accumulator &other)
   : _accumulator(other._accumulator)
   {}
 
-  void append(const match_pair &p);
-  void append(const unique_match_pair_accumulator &acc);
+  immutable_match_pair_accumulator append(const match_pair &p) const;
+  immutable_match_pair_accumulator append(const immutable_match_pair_accumulator &acc) const;
 
   const match_pair_vector &get_vector(void) const;
 
