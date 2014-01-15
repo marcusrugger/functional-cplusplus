@@ -12,11 +12,7 @@ SOURCE_FILES =
 
 MAIN = main
 
-MAIN_SOURCES =	$(MAIN).cpp				\
-								iterators.cpp			\
-								sequencer.cpp			\
-								thread.cpp				\
-								accumulator.cpp
+MAIN_SOURCES =	$(MAIN).cpp
 
 MAIN_OBJECTS = $(MAIN_SOURCES:.cpp=.o)
 
