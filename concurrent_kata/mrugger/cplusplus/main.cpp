@@ -83,8 +83,8 @@ int main(const int argc, const char **argv)
 {
   mythread::set_max_tree_depth();
   const int replications = 1000000;
-
   std::string str("8745648184845171326578518184151512461752149647129746915414816354846454");
+
   sequencer seq(str, replications);
   const accumulator acc = process_sequence(accumulator(), seq, 0);
 

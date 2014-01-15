@@ -35,7 +35,7 @@ class immutable_shared_match_pair_accumulator
 {
 private:
 
-  std::shared_ptr<match_pair_vector> _accumulator;
+  std::shared_ptr<const match_pair_vector> _accumulator;
 
   immutable_shared_match_pair_accumulator(const immutable_shared_match_pair_accumulator &front, const match_pair &pair);
   immutable_shared_match_pair_accumulator(const immutable_shared_match_pair_accumulator &front, const immutable_shared_match_pair_accumulator &back);
