@@ -96,7 +96,7 @@ public:
     return template_string(p, total_length);
   }
 
-  template_string append(const T c) const
+  template_string append(const T &c) const
   {
     size_t total_length = length() + 1;
     T *p = new T[(total_length+1)*sizeof(T)];

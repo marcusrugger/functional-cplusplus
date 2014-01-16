@@ -12,8 +12,11 @@ template <typename OBJ, typename T> class index_backward_iterator;
 template <typename IT, typename ACC, typename T> class executor;
 template <typename IT, typename ACC, typename T> class foreach;
 
-template <typename T>
-using fmap_callback = std::function<T(T)>;
+template <typename SRC_T, DST_T=SRC_T>
+using fmap_callback = std::function<DST_T(SRC_T)>;
+
+template <typename ACC, typename T>
+using foreach_callback = std::function<const ACC(const ACC&, const T&)>;
 
 
 template <typename IT, typename ACC, typename T>
@@ -21,7 +24,9 @@ class executor
 {
 private:
 
-  const std::function<const ACC(const ACC &, const T &)> _fn;
+  using callback = foreach_callback<ACC,T>;
+
+  const callback _fn;
 
   const ACC loop(const ACC &acc, const IT &it) const
   {
@@ -32,8 +37,6 @@ private:
   }
 
 public:
-
-  using callback = std::function<const ACC(const ACC&, const T&)>;
 
   executor(const callback fn)
   : _fn(fn)
@@ -56,7 +59,7 @@ private:
 public:
 
   using executor = mtr::executor<IT,ACC,T>;
-  using callback = std::function<const ACC(const ACC&, const T&)>;
+  using callback = foreach_callback<ACC,T>;
 
   foreach(const IT &it, const ACC &acc)
   : _it(it), _acc(acc)

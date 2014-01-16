@@ -5,10 +5,18 @@
 
 int main(void)
 {
-  mtr::string somestring("upper case");
-  auto to_lower = somestring.fmap();
-  mtr::string mynewstring = to_lower([](char c) -> char { return c >= 'a' && c <= 'z' ? c - 32 : c; });
-  mynewstring.foreach(0)([](int a, char c) -> int { printf("[%c]", c); });
+  auto to_upper = [](char c) -> char { return c >= 'a' && c <= 'z' ? c - 32 : c; };
+  auto to_lower = [](char c) -> char { return c >= 'A' && c <= 'Z' ? c + 32 : c; };
+
+  mtr::string somestring("SoMe StRiNg");
+  auto fmap = somestring.fmap();
+  mtr::string uppercase = fmap(to_upper);
+  mtr::string lowercase = fmap(to_lower);
+  uppercase.foreach(0)([](int a, char c) -> int { printf("[%c]", c); });
+  printf("\n");
+  lowercase.foreach(0)([](int a, char c) -> int { printf("[%c]", c); });
+  printf("\n");
+  somestring.foreach(0)([](int a, char c) -> int { printf("[%c]", c); });
   printf("\n");
 
   mtr::string howdy("Howdy ");
