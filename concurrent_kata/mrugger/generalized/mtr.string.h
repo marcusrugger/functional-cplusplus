@@ -82,7 +82,7 @@ public:
   { return iterator().foreach(acc); }
 
   _fmap_ fmap(void) const
-  { return _fmap_((*this)); }
+  { return _fmap_(template_string(), iterator()); }
 
   size_t length(void) const
   { return _string_length; }

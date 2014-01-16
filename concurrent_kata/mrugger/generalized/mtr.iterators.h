@@ -12,7 +12,7 @@ template <typename OBJ, typename T> class index_backward_iterator;
 template <typename IT, typename ACC, typename T> class executor;
 template <typename IT, typename ACC, typename T> class foreach;
 
-template <typename SRC_T, DST_T=SRC_T>
+template <typename SRC_T, typename DST_T=SRC_T>
 using fmap_callback = std::function<DST_T(SRC_T)>;
 
 template <typename ACC, typename T>
@@ -74,12 +74,12 @@ public:
 };
 
 
-template <typename COLLECTION, typename IT, typename T>
+template <typename COLLECTION, typename IT, typename SRC_T, typename DST_T=SRC_T>
 class fmap_executor
 {
 private:
 
-  using callback = fmap_callback<T>;
+  using callback = fmap_callback<SRC_T,DST_T>;
 
   const COLLECTION _collection;
   const IT _it;
@@ -107,25 +107,30 @@ public:
 };
 
 
-template <typename COLLECTION, typename IT, typename T>
+template <typename COLLECTION, typename IT, typename SRC_T, typename DST_T=SRC_T>
 class fmap
 {
 private:
 
   const COLLECTION _collection;
+  const IT _it;
 
 public:
 
-  using executor = fmap_executor<COLLECTION,IT,T>;
-  using callback = fmap_callback<T>;
+  using executor = fmap_executor<COLLECTION,IT,SRC_T,DST_T>;
+  using callback = fmap_callback<SRC_T,DST_T>;
 
   fmap(const COLLECTION &collection)
-  : _collection(collection)
+  : _collection(collection), _it(collection.iterator())
+  {}
+
+  fmap(const COLLECTION &collection, const IT &it)
+  : _collection(collection), _it(it)
   {}
 
   const COLLECTION operator()(const callback fn) const
   {
-    executor exec(COLLECTION(), _collection.iterator(), fn);
+    executor exec(_collection, _it, fn);
     return exec();
   }
 
