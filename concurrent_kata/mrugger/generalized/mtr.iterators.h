@@ -12,6 +12,9 @@ template <typename OBJ, typename T> class index_backward_iterator;
 template <typename IT, typename ACC, typename T> class executor;
 template <typename IT, typename ACC, typename T> class foreach;
 
+template <typename T>
+using fmap_callback = std::function<T(T)>;
+
 
 template <typename IT, typename ACC, typename T>
 class executor
@@ -63,6 +66,64 @@ public:
   {
     const executor f = executor(fn);
     return f(_it, _acc);
+  }
+
+};
+
+
+template <typename COLLECTION, typename IT, typename T>
+class fmap_executor
+{
+private:
+
+  using callback = fmap_callback<T>;
+
+  const COLLECTION _collection;
+  const IT _it;
+  const callback _fn;
+
+  const COLLECTION loop(const COLLECTION &collection, const IT &it) const
+  {
+    if (it.is_more())
+      return loop(collection.append(_fn(it())), it.next());
+    else
+      return collection.append(_fn(it()));
+  }
+
+public:
+
+  fmap_executor(const COLLECTION &collection, const IT &it, const callback fn)
+  : _collection(collection), _it(it), _fn(fn)
+  {}
+
+  const COLLECTION operator()(void) const
+  {
+    return loop(_collection, _it);
+  }
+
+};
+
+
+template <typename COLLECTION, typename IT, typename T>
+class fmap
+{
+private:
+
+  const COLLECTION _collection;
+
+public:
+
+  using executor = fmap_executor<COLLECTION,IT,T>;
+  using callback = fmap_callback<T>;
+
+  fmap(const COLLECTION &collection)
+  : _collection(collection)
+  {}
+
+  const COLLECTION operator()(const callback fn) const
+  {
+    executor exec(COLLECTION(), _collection.iterator(), fn);
+    return exec();
   }
 
 };

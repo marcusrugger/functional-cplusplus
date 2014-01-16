@@ -5,12 +5,20 @@
 
 int main(void)
 {
+  mtr::string somestring("upper case");
+  auto to_lower = somestring.fmap();
+  mtr::string mynewstring = to_lower([](char c) -> char { return c >= 'a' && c <= 'z' ? c - 32 : c; });
+  mynewstring.foreach(0)([](int a, char c) -> int { printf("[%c]", c); });
+  printf("\n");
+
   mtr::string howdy("Howdy ");
   mtr::string doody("doody");
   mtr::string string = howdy.append(doody);
 
-  auto f = string.iterator().foreach(0);
-  f([](int a, char c) -> int { printf(">%c<", c); });
+  string.foreach(0)([](int a, char c) -> int { printf("[%c]", c); });
+  printf("\n");
+
+  string.iterator().foreach(0)([](int a, char c) -> int { printf(">%c<", c); });
   printf("\n");
   
   auto g = string.back_iterator().foreach(0);
