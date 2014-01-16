@@ -1,3 +1,4 @@
+#pragma once
 #include <memory>
 
 
@@ -7,6 +8,8 @@ namespace mtr
 typedef int index;
 
 template <typename OBJ, typename T> class index_forward_iterator;
+template <typename OBJ, typename T> class index_backward_iterator;
+template <typename IT, typename ACC, typename T> class executor;
 template <typename IT, typename ACC, typename T> class foreach;
 
 
@@ -70,7 +73,7 @@ class index_forward_iterator
 {
 private:
 
-  std::shared_ptr<const OBJ> _obj;
+  const std::shared_ptr<const OBJ> _obj;
 
   const index _idx;
   const index _begin;
@@ -82,17 +85,21 @@ private:
 
 public:
 
-  index_forward_iterator(const OBJ &obj, const index begin, const index end, const index step = 1)
-  : _obj(new OBJ(obj)), _idx(begin), _begin(begin), _end(end), _step(step)
-  { validate_index(); }
+  index_forward_iterator(const index_forward_iterator &other)
+  : _obj(other._obj), _idx(other._idx), _begin(other._begin), _end(other._end), _step(other._step)
+  {}
+
+  index_forward_iterator(const index_backward_iterator<OBJ,T> &other)
+  : _obj(other._obj), _idx(other._idx), _begin(other._begin), _end(other._end), _step(other._step)
+  {}
 
   index_forward_iterator(const index_forward_iterator &other, const index idx)
   : _obj(other._obj), _idx(idx), _begin(other._begin), _end(other._end), _step(other._step)
   { validate_index(); }
 
-  index_forward_iterator(const index_forward_iterator &other)
-  : _obj(other._obj), _idx(other._idx), _begin(other._begin), _end(other._end), _step(other._step)
-  {}
+  index_forward_iterator(const OBJ &obj, const index begin, const index end, const index step = 1)
+  : _obj(new OBJ(obj)), _idx(begin), _begin(begin), _end(end), _step(step)
+  { validate_index(); }
 
   T operator()(void) const
   { return (*_obj)[_idx]; }
@@ -121,7 +128,7 @@ class index_backward_iterator
 {
 private:
 
-  std::shared_ptr<const OBJ> _obj;
+  const std::shared_ptr<const OBJ> _obj;
 
   const index _idx;
   const index _begin;
@@ -133,17 +140,21 @@ private:
 
 public:
 
-  index_backward_iterator(const OBJ &obj, const index begin, const index end, const index step = 1)
-  : _obj(new OBJ(obj)), _idx(_end), _begin(begin), _end(end), _step(step)
-  { validate_index(); }
+  index_backward_iterator(const index_backward_iterator &other)
+  : _obj(other._obj), _idx(other._idx), _begin(other._begin), _end(other._end), _step(other._step)
+  {}
+
+  index_backward_iterator(const index_forward_iterator<OBJ,T> &other)
+  : _obj(other._obj), _idx(other._idx), _begin(other._begin), _end(other._end), _step(other._step)
+  {}
 
   index_backward_iterator(const index_backward_iterator &other, const index idx)
   : _obj(other._obj), _idx(idx), _begin(other._begin), _end(other._end), _step(other._step)
   { validate_index(); }
 
-  index_backward_iterator(const index_backward_iterator &other)
-  : _obj(other._obj), _idx(other._idx), _begin(other._begin), _end(other._end), _step(other._step)
-  {}
+  index_backward_iterator(const OBJ &obj, const index begin, const index end, const index step = 1)
+  : _obj(new OBJ(obj)), _idx(_end), _begin(begin), _end(end), _step(step)
+  { validate_index(); }
 
   T operator()(void) const
   { return (*_obj)[_idx]; }

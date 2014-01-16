@@ -5,6 +5,11 @@
 
 int main(void)
 {
+  mtr::string string("Howdy");
+  auto f = string.iterator().foreach(0);
+  f([](int a, char c) -> int { printf(">%c<", c); });
+  printf("\n");
+
   std::string str = "Hello world!";
 
   {
