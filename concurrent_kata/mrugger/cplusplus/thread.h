@@ -3,6 +3,7 @@
 #include <functional>
 #include <list>
 #include <thread>
+#include <memory>
 #include "main.h"
 
 
@@ -29,7 +30,7 @@ private:
   const int _tree_depth;
   const std::unique_ptr<std::thread> _thread;
 
-  accumulator thread_return_accumulator;
+  std::shared_ptr<const accumulator> thread_result_accumulator;
 
   void callback(void);
 

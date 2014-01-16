@@ -48,20 +48,36 @@ const match_pair_vector &mutable_match_pair_accumulator::get_vector(void) const
 immutable_shared_match_pair_accumulator::immutable_shared_match_pair_accumulator(
   const immutable_shared_match_pair_accumulator &front,
   const match_pair &pair)
+: _accumulator(create_accumulator(front, pair))
 {
-  std::unique_ptr<match_pair_vector> new_acc(new match_pair_vector(*(front._accumulator)));
-  new_acc->push_back(pair);
-  _accumulator.reset(new_acc.release());
 }
 
 
 immutable_shared_match_pair_accumulator::immutable_shared_match_pair_accumulator(
   const immutable_shared_match_pair_accumulator &front,
   const immutable_shared_match_pair_accumulator &back)
+: _accumulator(create_accumulator(front, back))
+{
+}
+
+
+const match_pair_vector *immutable_shared_match_pair_accumulator::create_accumulator(
+  const immutable_shared_match_pair_accumulator &front,
+  const match_pair &pair) const
+{
+  std::unique_ptr<match_pair_vector> new_acc(new match_pair_vector(*(front._accumulator)));
+  new_acc->push_back(pair);
+  return new_acc.release();
+}
+
+
+const match_pair_vector *immutable_shared_match_pair_accumulator::create_accumulator(
+  const immutable_shared_match_pair_accumulator &front,
+  const immutable_shared_match_pair_accumulator &back) const
 {
   std::unique_ptr<match_pair_vector> new_acc(new match_pair_vector(*(front._accumulator)));
   new_acc->insert(new_acc->end(), back._accumulator->cbegin(), back._accumulator->cend());
-  _accumulator.reset(new_acc.release());
+  return new_acc.release();
 }
 
 
