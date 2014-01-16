@@ -33,9 +33,13 @@ private:
   const T *create_string(const T *p) const
   {
     const size_t s = find_nil(p, 0);
-    T *pdst = new T[s];
+    T *pdst = new T[s+1];
     return copy_string(p, pdst, 0);
   }
+
+  template_string(const T *p, size_t len)
+  : _string(p), _string_length(len)
+  {}
 
 protected:
 
@@ -59,10 +63,22 @@ public:
   {}
 
   forward_iterator iterator(void) const
-  { return forward_iterator((*this), 0, _string_length-1, 1); }
+  { return forward_iterator((*this), 0, length()-1, 1); }
 
   backward_iterator back_iterator(void) const
-  { return backward_iterator((*this), 0, _string_length-1, 1); }
+  { return backward_iterator((*this), 0, length()-1, 1); }
+
+  size_t length(void) const
+  { return _string_length; }
+
+  template_string append(const template_string &other) const
+  {
+    size_t total_length = length() + other.length();
+    T *p = new T[(total_length+1)*sizeof(T)];
+    copy_string(_string.get(), p, 0);
+    copy_string(other._string.get(), p+length(), 0);
+    return template_string(p, total_length);
+  }
 
 };
 

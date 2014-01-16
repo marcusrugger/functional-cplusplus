@@ -153,7 +153,7 @@ public:
   { validate_index(); }
 
   index_backward_iterator(const OBJ &obj, const index begin, const index end, const index step = 1)
-  : _obj(new OBJ(obj)), _idx(_end), _begin(begin), _end(end), _step(step)
+  : _obj(new OBJ(obj)), _idx(end), _begin(begin), _end(end), _step(step)
   { validate_index(); }
 
   T operator()(void) const
