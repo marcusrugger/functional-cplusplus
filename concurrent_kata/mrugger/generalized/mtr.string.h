@@ -1,5 +1,6 @@
 #pragma once
 #include <memory>
+#include <cstring>
 #include "mtr.iterators.h"
 
 namespace mtr
@@ -89,22 +90,27 @@ public:
 
   template_string append(const template_string &other) const
   {
+    printf("template_string append(const template_string &other) const\n");
     size_t total_length = length() + other.length();
-    T *p = new T[(total_length+1)*sizeof(T)];
-    if (length() > 0) copy_string(_string.get(), p, 0);
-    if (other.length() > 0) copy_string(other._string.get(), p+length(), 0);
+    T *p = static_cast<T *> (::operator new (sizeof(T[total_length])));
+    if (length() > 0) std::memcpy(p, _string.get(), length());
+    if (other.length() > 0) std::memcpy(p+length(), other._string.get(), other.length());
     return template_string(p, total_length);
   }
 
   template_string append(const T &c) const
   {
+    printf("template_string append(const T &c) const\n");
     size_t total_length = length() + 1;
-    T *p = new T[(total_length+1)*sizeof(T)];
-    if (length() > 0) copy_string(_string.get(), p, 0);
+    T *p = static_cast<T *> (::operator new (sizeof(T[total_length])));
+    if (length() > 0) p+length(), memcpy(p, _string.get(), length());
     p[length()] = c;
     p[length()+1] = '\0';
     return template_string(p, total_length);
   }
+
+  const T* c_str(void) const
+  { return _string.get(); }
 
 };
 
