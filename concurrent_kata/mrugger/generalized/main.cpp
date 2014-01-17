@@ -128,10 +128,34 @@ void test_vector(void)
 
 void test_vector_with_strings(void)
 {
-  mtr::vector<mtr::string> v1;
-  auto v2 = v1.append(mtr::string("String one"));
-  auto v3 = v2.append(mtr::string("String two"));
-  v3.foreach(0)([](int a, const mtr::string &s) -> int { printf("string: %s\n", s.c_str()); });
+  {
+    mtr::vector<mtr::string> v1;
+    auto v2 = v1.append(mtr::string("String one"))
+                .append(mtr::string("String two"))
+                .append(mtr::string("String three"))
+                .append(mtr::string("String four"))
+                .append(mtr::string("String five"))
+                .append(mtr::string("String six"));
+
+    v2.foreach(0)([](int a, const mtr::string &s) -> int { std::cout << s << std::endl; });
+  }
+}
+
+
+void test_vector_with_string_pointers(void)
+{
+  using shared_string = std::shared_ptr<mtr::string>;
+  {
+    mtr::vector<shared_string> v1;
+    auto v2 = v1.append(shared_string(new mtr::string("Shared string one")))
+                .append(shared_string(new mtr::string("Shared string two")))
+                .append(shared_string(new mtr::string("Shared string three")))
+                .append(shared_string(new mtr::string("Shared string four")))
+                .append(shared_string(new mtr::string("Shared string five")))
+                .append(shared_string(new mtr::string("Shared string six")));
+
+    v2.foreach(0)([](int a, const shared_string &s) -> int { std::cout << *s << std::endl; });
+  }
 }
 
 
@@ -141,6 +165,7 @@ int main(void)
   test_vector();
 
   test_vector_with_strings();
+  test_vector_with_string_pointers();
 
 //  printf("live instances: %d\n", test_class::_live_instances);
 

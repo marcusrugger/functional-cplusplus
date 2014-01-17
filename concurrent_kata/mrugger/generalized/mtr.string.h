@@ -1,4 +1,5 @@
 #pragma once
+#include <ostream>
 #include <memory>
 #include <cstring>
 #include "mtr.iterators.h"
@@ -16,7 +17,7 @@ private:
 
   index find_nil(const T *p, const int idx) const
   {
-    if (p[idx] == '\0')
+    if (p[idx] == T())
       return idx;
     else
       return find_nil(p, idx+1);
@@ -25,7 +26,7 @@ private:
   const T *copy_string(const T *psrc, T *pdst, const index idx) const
   {
     pdst[idx] = psrc[idx];
-    if (psrc[idx] == '\0')
+    if (psrc[idx] == T())
       return pdst;
     else
       return copy_string(psrc, pdst, idx+1);
@@ -90,22 +91,21 @@ public:
 
   template_string append(const template_string &other) const
   {
-    printf("template_string append(const template_string &other) const\n");
     size_t total_length = length() + other.length();
-    T *p = static_cast<T *> (::operator new (sizeof(T[total_length])));
+    T *p = static_cast<T *> (::operator new (sizeof(T[total_length+1])));
     if (length() > 0) std::memcpy(p, _string.get(), length());
     if (other.length() > 0) std::memcpy(p+length(), other._string.get(), other.length());
+    p[total_length] = '\0';
     return template_string(p, total_length);
   }
 
   template_string append(const T &c) const
   {
-    printf("template_string append(const T &c) const\n");
     size_t total_length = length() + 1;
-    T *p = static_cast<T *> (::operator new (sizeof(T[total_length])));
+    T *p = static_cast<T *> (::operator new (sizeof(T[total_length+1])));
     if (length() > 0) p+length(), memcpy(p, _string.get(), length());
     p[length()] = c;
-    p[length()+1] = '\0';
+    p[length()+1] = T();
     return template_string(p, total_length);
   }
 
@@ -116,5 +116,12 @@ public:
 
 typedef template_string<char> string;
 typedef template_string<wchar_t> wstring;
+
+template<typename T>
+std::ostream& operator << (std::ostream &os, const template_string<T> &str)
+{
+  os << str.c_str();
+  return os;
+}
 
 }
