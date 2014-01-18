@@ -30,10 +30,10 @@ private:
 
   const ACC loop(const ACC &acc, const IT &it) const
   {
-    if (it.is_more())
-      return loop(_fn(acc, it()), it.next());
+    if (it.is_empty())
+      return acc;
     else
-      return _fn(acc, it());
+      return loop(_fn(acc, it()), it.next());
   }
 
 public:
@@ -87,10 +87,10 @@ private:
 
   const COLLECTION loop(const COLLECTION &collection, const IT &it) const
   {
-    if (it.is_more())
-      return loop(collection.append(_fn(it())), it.next());
+    if (it.is_empty())
+      return collection;
     else
-      return collection.append(_fn(it()));
+      return loop(collection.append(_fn(it())), it.next());
   }
 
 public:
@@ -149,7 +149,7 @@ private:
   const index _end;
   const index _step;
 
-  void validate_index(void)
+  void validate_index(void) const
   { if (_idx < 0 || _idx > _end) throw std::runtime_error("index is out of range in index_forward_iterator"); }
 
 public:
@@ -164,17 +164,20 @@ public:
 
   index_forward_iterator(const index_forward_iterator &other, const index idx)
   : _obj(other._obj), _idx(idx), _begin(other._begin), _end(other._end), _step(other._step)
-  { validate_index(); }
+  {}
 
   index_forward_iterator(const OBJ &obj, const index begin, const index end, const index step = 1)
   : _obj(new OBJ(obj)), _idx(begin), _begin(begin), _end(end), _step(step)
-  { validate_index(); }
+  {}
 
   T operator()(void) const
-  { return (*_obj)[_idx]; }
+  { validate_index(); return (*_obj)[_idx]; }
 
   bool is_more(void) const
   { return _idx+_step <= _end; }
+
+  bool is_empty(void) const
+  { return _idx > _end; }
 
   index_forward_iterator next(void) const
   { return index_forward_iterator((*this), _idx+_step); }
@@ -204,7 +207,7 @@ private:
   const index _end;
   const index _step;
 
-  void validate_index(void)
+  void validate_index(void) const
   { if (_idx < 0 || _idx > _end) throw std::runtime_error("index is out of range in index_backward_iterator"); }
 
 public:
@@ -219,17 +222,20 @@ public:
 
   index_backward_iterator(const index_backward_iterator &other, const index idx)
   : _obj(other._obj), _idx(idx), _begin(other._begin), _end(other._end), _step(other._step)
-  { validate_index(); }
+  {}
 
   index_backward_iterator(const OBJ &obj, const index begin, const index end, const index step = 1)
   : _obj(new OBJ(obj)), _idx(end), _begin(begin), _end(end), _step(step)
-  { validate_index(); }
+  {}
 
   T operator()(void) const
-  { return (*_obj)[_idx]; }
+  { validate_index(); return (*_obj)[_idx]; }
 
   bool is_more(void) const
   { return _idx-_step >= _begin; }
+
+  bool is_empty(void) const
+  { return _idx < _begin; }
 
   index_backward_iterator next(void) const
   { return index_backward_iterator((*this), _idx-_step); }

@@ -61,11 +61,35 @@ static void test_with_string_5(void)
 }
 
 
+static void test_is_empty(void)
+{
+  using string = mtr::string;
+  using iterator = mtr::index_backward_iterator<string,char>;
+
+  {
+    iterator it(string("Hello World"), 3, 7);
+    SHOULD_BE_FALSE(it.is_empty(), "is_empty() on iterator that isn't empty");
+  }
+
+  {
+    iterator it(string("Hello World"), 3, 2);
+    SHOULD_BE_TRUE(it.is_empty(), "is_empty() on iterator that is empty");
+  }
+
+  {
+    iterator it(string("Hello World"), 3, 3);
+    SHOULD_BE_FALSE(it.is_empty(), "is_empty() on iterator that has one item");
+    SHOULD_BE_TRUE(it.next().is_empty(), "is_empty() on next of iterator that has one item");
+  }
+}
+
+
 void test_iterators_index_backward_iterator(void)
 {
   std::cout << "BEGIN: ***** " << __FILE__ << " *****" << std::endl;
   test_with_string_1();
   test_with_string_2();
   test_with_string_5();
+  test_is_empty();
   std::cout << "END:   ***** " << __FILE__ << " *****" << std::endl;
 }
