@@ -11,6 +11,14 @@ LDFLAGS=-pthread -std=c++11 -Wl,--no-as-needed
 SOURCE_FILES =
 
 
+TEST_MAIN = test.main
+
+TEST_MAIN_SOURCES =	$(TEST_MAIN).cpp						\
+										test.iterators.executor.cpp
+
+TEST_MAIN_OBJECTS = $(TEST_MAIN_SOURCES:.cpp=.o)
+
+
 MAIN = main
 
 MAIN_SOURCES =	$(MAIN).cpp
@@ -18,12 +26,18 @@ MAIN_SOURCES =	$(MAIN).cpp
 MAIN_OBJECTS = $(MAIN_SOURCES:.cpp=.o)
 
 
-all:	$(MAIN)
+all:	$(TEST_MAIN)	\
+			$(MAIN)
 
 
 clean:
 	rm *.o
+	rm $(TEST_MAIN)
 	rm $(MAIN)
+
+
+$(TEST_MAIN):	$(TEST_MAIN_OBJECTS)
+	$(CC) $(LDFLAGS) $(TEST_MAIN_OBJECTS) -o $@
 
 
 $(MAIN):	$(MAIN_OBJECTS)

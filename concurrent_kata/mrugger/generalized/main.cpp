@@ -155,17 +155,69 @@ void test_vector_with_string_pointers(void)
                 .append(shared_string(new mtr::string("Shared string six")));
 
     v2.foreach(0)([](int a, const shared_string &s) -> int { std::cout << *s << std::endl; });
+    v2.foreach(0)([](int, const shared_string &s) -> int { std::cout << *s << std::endl; });
   }
 }
 
 
+class curry_f
+{
+public:
+
+  const int _x, _y;
+
+  curry_f(int x, int y)
+  : _x(x), _y(y)
+  {}
+
+  int operator ()(int z) const
+  { return _x * _y + z; }
+
+};
+
+
+class curry_g
+{
+public:
+
+  const int _x;
+
+  curry_g(int x)
+  : _x(x)
+  {}
+
+  curry_f operator ()(int y) const
+  { return curry_f(_x, y); }
+
+};
+
+
+class curry_h
+{
+public:
+
+  curry_h(void)
+  {}
+
+  curry_g operator ()(int x) const
+  { return curry_g(x); }
+
+};
+
+
 int main(void)
 {
-  test_string();
-  test_vector();
+  curry_h h;
+  auto g = h(2);
+  auto f = g(3);
+  printf("f = %d\n", f(4));
 
-  test_vector_with_strings();
-  test_vector_with_string_pointers();
+  printf("3 * 4 + 5 = %d\n", h(3)(4)(5));
+  //test_string();
+  //test_vector();
+
+  //test_vector_with_strings();
+  //test_vector_with_string_pointers();
 
 //  printf("live instances: %d\n", test_class::_live_instances);
 
