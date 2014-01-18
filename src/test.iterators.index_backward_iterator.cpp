@@ -9,7 +9,8 @@ static void test_with_string_1(void)
   iterator it(string("Hello World"), 7, 7);
 
   SHOULD_BE_EQ(it.to_i(), 7, "Current position should be initial position");
-  SHOULD_BE_FALSE(it.is_more(), "There should not be more");
+  SHOULD_BE_FALSE(it.is_empty(), "The iterator is not empty");
+  SHOULD_BE_TRUE(it.next().is_empty(), "The next iterator should be empty");
   SHOULD_BE_EQ(it(), 'o', "Current character");
 
   auto cnt_fn = [](int a, char c)->int { return a + 1; };
@@ -28,8 +29,9 @@ static void test_with_string_2(void)
 
   SHOULD_BE_EQ(it.to_i(), 7, "Current position should be initial position");
   SHOULD_BE_EQ(it.next().to_i(), 6, "Next position should be initial position - 1");
-  SHOULD_BE_TRUE(it.is_more(), "There should be more");
-  SHOULD_BE_FALSE(it.next().is_more(), "There should not be more after next");
+  SHOULD_BE_FALSE(it.is_empty(), "The iterator should not be empty");
+  SHOULD_BE_FALSE(it.next().is_empty(), "The next iterator should not be empty");
+  SHOULD_BE_TRUE(it.next().next().is_empty(), "The next, next iterator should be empty");
   SHOULD_BE_EQ(it(), 'o', "Current character");
   SHOULD_BE_EQ(it.next()(), 'W', "Current character");
 
@@ -49,8 +51,8 @@ static void test_with_string_5(void)
 
   SHOULD_BE_EQ(it.to_i(), 7, "Current position should be initial position");
   SHOULD_BE_EQ(it.next().to_i(), 6, "Next position should be initial position - 1");
-  SHOULD_BE_TRUE(it.is_more(), "There should be more");
-  SHOULD_BE_TRUE(it.next().is_more(), "There should be more after next");
+  SHOULD_BE_FALSE(it.is_empty(), "The iterator should not be empty");
+  SHOULD_BE_FALSE(it.next().is_empty(), "The next iterator should not be empty");
   SHOULD_BE_EQ(it(), 'o', "Current character");
   SHOULD_BE_EQ(it.next()(), 'W', "Current character");
 
