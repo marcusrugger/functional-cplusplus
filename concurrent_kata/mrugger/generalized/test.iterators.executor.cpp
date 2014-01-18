@@ -1,7 +1,7 @@
 #include "test.main.h"
 
 
-static void test(void)
+static void test_with_string(void)
 {
   using string = mtr::string;
   using iterator = mtr::index_forward_iterator<string,char>;
@@ -13,13 +13,13 @@ static void test(void)
 
   auto cnt = exec(s.iterator(), 0);
 
-  SHOULD_BE_EQ(cnt, 11, "Call function correct number of times");
+  SHOULD_BE_EQ(cnt, (int) s.length(), "Call function correct number of times");
 }
 
 
 void test_iterators_executor(void)
 {
   std::cout << "BEGIN: ***** " << __FILE__ << " *****" << std::endl;
-  test();
+  test_with_string();
   std::cout << "END:   ***** " << __FILE__ << " *****" << std::endl;
 }
