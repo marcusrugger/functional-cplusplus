@@ -52,6 +52,13 @@ void should_be_true(bool test_result,
                     const char *description = NULL);
 
 
+#define SHOULD_BE_FALSE(a,b) should_be_false(a,__FILE__,__LINE__,b)
+
+void should_be_false(bool test_result,
+                     const char *filename, int linenumber,
+                     const char *description = NULL);
+
+
 /* Test functions */
 
 void test_iterators_executor(void);
@@ -59,3 +66,4 @@ void test_iterators_foreach(void);
 void test_iterators_fmap_executor(void);
 void test_iterators_fmap(void);
 void test_iterators_index_forward_iterator(void);
+void test_iterators_index_backward_iterator(void);
