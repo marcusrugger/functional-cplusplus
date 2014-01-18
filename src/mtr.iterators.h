@@ -173,9 +173,6 @@ public:
   T operator()(void) const
   { validate_index(); return (*_obj)[_idx]; }
 
-  bool is_more(void) const
-  { return _idx+_step <= _end; }
-
   bool is_empty(void) const
   { return _idx > _end; }
 
