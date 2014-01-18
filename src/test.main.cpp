@@ -65,4 +65,5 @@ int main(int argc, char **argv)
   test_iterators_fmap();
   test_iterators_index_forward_iterator();
   test_iterators_index_backward_iterator();
+  test_string_string();
 }

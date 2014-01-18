@@ -19,7 +19,8 @@ TEST_MAIN_SOURCES =	$(TEST_MAIN).cpp														\
 										test.iterators.fmap_executor.cpp						\
 										test.iterators.fmap.cpp											\
 										test.iterators.index_forward_iterator.cpp		\
-										test.iterators.index_backward_iterator.cpp
+										test.iterators.index_backward_iterator.cpp	\
+										test.string.string.cpp
 
 TEST_MAIN_OBJECTS = $(TEST_MAIN_SOURCES:.cpp=.o)
 
@@ -32,13 +33,19 @@ MAIN_OBJECTS = $(MAIN_SOURCES:.cpp=.o)
 
 
 all:	$(TEST_MAIN)	\
-			$(MAIN)
+			$(MAIN)				\
+			unit_tests
 
 
 clean:
 	rm *.o
 	rm $(TEST_MAIN)
 	rm $(MAIN)
+
+
+unit_tests:	$(TEST_MAIN)
+	@echo "Running unit tests..."
+	./$(TEST_MAIN) 2> log.err | tee log.out | grep "Success" | wc; cat log.err
 
 
 $(TEST_MAIN):	$(TEST_MAIN_OBJECTS)

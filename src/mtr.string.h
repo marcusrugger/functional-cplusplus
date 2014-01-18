@@ -39,6 +39,15 @@ private:
     return copy_string(p, pdst, 0);
   }
 
+  int compare(const T *one, const T *two) const
+  {
+    const int c = (*one) - (*two);
+    if (c != 0 || (*one) == '\0' || (*two) == '\0')
+      return c;
+    else
+      return compare(one+1, two+1);
+  }
+
   template_string(const T *p, size_t len)
   : _string(p), _string_length(len)
   {}
@@ -107,6 +116,16 @@ public:
     p[length()] = c;
     p[length()+1] = T();
     return template_string(p, total_length);
+  }
+
+  int compare(const template_string &other) const
+  {
+    return compare(_string.get(), other._string.get());
+  }
+
+  bool operator ==(const template_string &other) const
+  {
+    return compare(other) == 0;
   }
 
   const T* c_str(void) const
