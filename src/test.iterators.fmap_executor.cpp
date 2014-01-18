@@ -8,12 +8,19 @@ static void test_with_string(void)
   using executor = mtr::fmap_executor<string,iterator,char>;
 
   string s("Hello World");
-  auto fn = [](char c)->int { return c >= 'a' && c <= 'z' ? c-32 : c; };
+  auto to_lower_case = [](char c)->char
+                       { return c >= 'a' && c <= 'z' ? c-32 : c; };
 
-  executor fmap(string(), s.iterator(), fn);
-  auto result = fmap();
-
+  executor fmap_exec(string(), s.iterator(), to_lower_case);
+  auto result = fmap_exec();
   SHOULD_BE_EQ((int) result.length(), (int) s.length(), "Resulting string should be same length as original");
+
+  auto count_upper_case = [](int a, char c)->int
+                          { return a + (c >= 'A' && c <= 'Z' ? 1 : 0); };
+
+  auto cnt = result.foreach(0)(count_upper_case);
+
+  SHOULD_BE_EQ(cnt, (int) s.length()-1, "All alpha-characters should now be upper case");
 }
 
 
