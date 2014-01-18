@@ -80,19 +80,6 @@ static void test_append_vector(void)
     return a+1;
   };
   c.foreach(0)(cmp_fn);
-
-#if 0
-  auto it = c.iterator();
-  auto s1 = it();
-  auto s2 = it.next()();
-  auto s3 = it.next().next()();
-  auto s4 = it.next().next().next()();
-
-  SHOULD_BE_EQ(s1, string(str1), "");
-  SHOULD_BE_EQ(s2, string(str2), "");
-  SHOULD_BE_EQ(s3, string(str3), "");
-  SHOULD_BE_EQ(s4, string(str4), "");
-#endif
 }
 
 
