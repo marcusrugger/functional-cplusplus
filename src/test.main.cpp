@@ -36,4 +36,5 @@ int main(int argc, char **argv)
   test_iterators_foreach();
   test_iterators_fmap_executor();
   test_iterators_fmap();
+  test_iterators_index_forward_iterator();
 }
