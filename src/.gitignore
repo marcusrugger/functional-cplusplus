@@ -1,5 +1,7 @@
 main
 test.main
+log.out
+log.err
 
 # Compiled Object files
 *.slo

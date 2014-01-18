@@ -1,5 +1,4 @@
 #include <iostream>
-#include <stdexcept>
 #include "mtr.iterators.h"
 #include "mtr.string.h"
 #include "mtr.vector.h"
@@ -24,23 +23,25 @@ void should_be_eq(T test_result, T expected_value,
               << std::endl;
   else
   {
-    std::cout << "FAILURE: "
+    std::cerr << "FAILURE: "
               << (description ? description : "(no description)")
               << std::endl
               << "\t"
-              << test_result
-              << " does not equal expected value: "
+              << "Expected value:\t"
               << expected_value
               << std::endl
               << "\t"
-              << "File: "
+              << "Test result:\t"
+              << test_result
+              << std::endl
+              << "\t"
+              << "File name:\t"
               << filename
               << std::endl
               << "\t"
-              << "Line: "
+              << "Line number:\t"
               << linenumber
               << std::endl;
-    throw std::runtime_error(description);
   }
 }
 

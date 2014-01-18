@@ -11,7 +11,7 @@ void should_be_true(bool test_result,
               << std::endl;
   else
   {
-    std::cout << "FAILURE: "
+    std::cerr << "FAILURE: "
               << (description ? description : "(no description)")
               << std::endl
               << "\t"
@@ -25,7 +25,6 @@ void should_be_true(bool test_result,
               << "Line: "
               << linenumber
               << std::endl;
-    throw std::runtime_error(description);
   }
 }
 
@@ -40,7 +39,7 @@ void should_be_false(bool test_result,
               << std::endl;
   else
   {
-    std::cout << "FAILURE: "
+    std::cerr << "FAILURE: "
               << (description ? description : "(no description)")
               << std::endl
               << "\t"
@@ -54,7 +53,6 @@ void should_be_false(bool test_result,
               << "Line: "
               << linenumber
               << std::endl;
-    throw std::runtime_error(description);
   }
 }
 
