@@ -57,3 +57,4 @@ void should_be_true(bool test_result,
 void test_iterators_executor(void);
 void test_iterators_foreach(void);
 void test_iterators_fmap_executor(void);
+void test_iterators_fmap(void);

@@ -16,7 +16,8 @@ TEST_MAIN = test.main
 TEST_MAIN_SOURCES =	$(TEST_MAIN).cpp									\
 										test.iterators.executor.cpp				\
 										test.iterators.foreach.cpp				\
-										test.iterators.fmap_executor.cpp
+										test.iterators.fmap_executor.cpp	\
+										test.iterators.fmap.cpp
 
 TEST_MAIN_OBJECTS = $(TEST_MAIN_SOURCES:.cpp=.o)
 
