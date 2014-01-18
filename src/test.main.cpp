@@ -34,4 +34,5 @@ int main(int argc, char **argv)
 {
   test_iterators_executor();
   test_iterators_foreach();
+  test_iterators_fmap_executor();
 }
