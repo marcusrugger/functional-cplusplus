@@ -59,7 +59,7 @@ void should_be_false(bool test_result,
 
 int main(int argc, char **argv)
 {
-  test_enumerator();
+  test_forward_enumerator();
   test_iterators_executor();
   test_iterators_foreach();
   test_iterators_fmap_executor();

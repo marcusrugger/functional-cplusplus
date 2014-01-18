@@ -39,11 +39,29 @@ static void test_enumeration(void)
 }
 
 
-void test_enumerator(void)
+static void test_enumeration_with_chars(void)
+{
+  using enumerator = mtr::forward_enumerator<char>;
+  using string = mtr::string;
+  using foreach = mtr::foreach<enumerator,string,char>;
+
+  const int start = 'a';
+  const int end   = 'z';
+  auto e = enumerator(start, end);
+
+  auto fn = [](string a, char i)->string { return a.append(i); };
+  auto f = foreach(e, string());
+  auto s = f(fn);
+  SHOULD_BE_EQ(s, string("abcdefghijklmnopqrstuvwxyz"), "Concatenation of characters");
+}
+
+
+void test_forward_enumerator(void)
 {
   std::cout << "BEGIN: ***** " << __FILE__ << " *****" << std::endl;
   test_default_constructor();
   test_range_constructor();
   test_enumeration();
+  test_enumeration_with_chars();
   std::cout << "END:   ***** " << __FILE__ << " *****" << std::endl;
 }

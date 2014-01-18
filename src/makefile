@@ -14,7 +14,7 @@ SOURCE_FILES =
 TEST_MAIN = test.main
 
 TEST_MAIN_SOURCES =	$(TEST_MAIN).cpp														\
-										test.enumerator.cpp													\
+										test.enumerator.forward_enumerator.cpp			\
 										test.iterators.executor.cpp									\
 										test.iterators.foreach.cpp									\
 										test.iterators.fmap_executor.cpp						\
