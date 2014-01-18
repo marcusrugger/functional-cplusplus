@@ -69,3 +69,4 @@ void test_iterators_fmap(void);
 void test_iterators_index_forward_iterator(void);
 void test_iterators_index_backward_iterator(void);
 void test_string_string(void);
+void test_vector(void);

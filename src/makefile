@@ -20,7 +20,8 @@ TEST_MAIN_SOURCES =	$(TEST_MAIN).cpp														\
 										test.iterators.fmap.cpp											\
 										test.iterators.index_forward_iterator.cpp		\
 										test.iterators.index_backward_iterator.cpp	\
-										test.string.string.cpp
+										test.string.string.cpp											\
+										test.vector.cpp
 
 TEST_MAIN_OBJECTS = $(TEST_MAIN_SOURCES:.cpp=.o)
 

@@ -88,6 +88,10 @@ public:
   : _vector(create_vector(p, len), array_deleter<T>(len)), _vector_length(len)
   {}
 
+  template_vector(const T &item)
+  : _vector(create_vector(&item, 1), array_deleter<T>(1)), _vector_length(1)
+  {}
+
   forward_iterator iterator(void) const
   { return forward_iterator((*this), 0, length()-1, 1); }
 
