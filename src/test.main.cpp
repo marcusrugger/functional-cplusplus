@@ -33,4 +33,5 @@ void should_be_true(bool test_result,
 int main(int argc, char **argv)
 {
   test_iterators_executor();
+  test_iterators_foreach();
 }

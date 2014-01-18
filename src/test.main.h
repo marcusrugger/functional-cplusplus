@@ -55,3 +55,4 @@ void should_be_true(bool test_result,
 /* Test functions */
 
 void test_iterators_executor(void);
+void test_iterators_foreach(void);
