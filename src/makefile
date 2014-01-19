@@ -17,8 +17,8 @@ TEST_MAIN_SOURCES =	$(TEST_MAIN).cpp														\
 										test.enumerator.forward_enumerator.cpp			\
 										test.foreach.executor.cpp										\
 										test.foreach.foreach.cpp										\
-										test.iterators.fmap_executor.cpp						\
-										test.iterators.fmap.cpp											\
+										test.fmap.fmap_executor.cpp									\
+										test.fmap.fmap.cpp													\
 										test.iterators.index_forward_iterator.cpp		\
 										test.iterators.index_backward_iterator.cpp	\
 										test.string.string.cpp											\

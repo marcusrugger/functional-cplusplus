@@ -5,7 +5,6 @@
 namespace mtr
 {
 
-template <typename IT, typename ACC, typename T> class foreach;
 
 template <typename ACC, typename T>
 using foreach_callback = std::function<const ACC(const ACC&, const T&)>;
