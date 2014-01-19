@@ -14,11 +14,11 @@ SOURCE_FILES =
 TEST_MAIN = test.main
 
 TEST_MAIN_SOURCES =	$(TEST_MAIN).cpp														\
-										test.enumerator.forward_enumerator.cpp			\
 										test.foreach.executor.cpp										\
 										test.foreach.foreach.cpp										\
 										test.fmap.fmap_executor.cpp									\
 										test.fmap.fmap.cpp													\
+										test.enumerator.forward_enumerator.cpp			\
 										test.iterators.index_forward_iterator.cpp		\
 										test.iterators.index_backward_iterator.cpp	\
 										test.string.string.cpp											\

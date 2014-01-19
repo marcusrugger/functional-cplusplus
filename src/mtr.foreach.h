@@ -11,7 +11,7 @@ using foreach_callback = std::function<const ACC(const ACC&, const T&)>;
 
 
 template <typename IT, typename ACC, typename T>
-class executor
+class foreach_executor
 {
 private:
 
@@ -29,7 +29,7 @@ private:
 
 public:
 
-  executor(const callback fn)
+  foreach_executor(const callback fn)
   : _fn(fn)
   {}
 
@@ -49,7 +49,7 @@ private:
 
 public:
 
-  using executor = mtr::executor<IT,ACC,T>;
+  using executor = mtr::foreach_executor<IT,ACC,T>;
   using callback = foreach_callback<ACC,T>;
 
   foreach(const IT &it, const ACC &acc)

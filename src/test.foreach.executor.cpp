@@ -5,7 +5,7 @@ static void test_with_string(void)
 {
   using string = mtr::string;
   using iterator = mtr::index_forward_iterator<string,char>;
-  using executor = mtr::executor<iterator,int,char>;
+  using executor = mtr::foreach_executor<iterator,int,char>;
 
   auto fn = [](int a, char c)->int { return a + 1; };
   executor exec(fn);

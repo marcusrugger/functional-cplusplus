@@ -1,4 +1,5 @@
 #include "test.main.h"
+#include <iostream>
 
 
 static void test_default_constructor(void)
@@ -54,6 +55,25 @@ static void test_enumeration_with_chars(void)
 }
 
 
+static void test_enumeration_with_step(void)
+{
+  using enumerator = mtr::forward_enumerator<int>;
+  auto fn = [](int a, int i)->int { return a + i; };
+
+  {
+    auto e = enumerator(3, 99, 2);
+    auto a = e.foreach(0)(fn);
+    SHOULD_BE_EQ(a, 2499, "Sum of the enumeration");
+  }
+
+  {
+    auto e = enumerator(3, 100, 2);
+    auto a = e.foreach(0)(fn);
+    SHOULD_BE_EQ(a, 2499, "Sum of the enumeration");
+  }
+}
+
+
 void test_forward_enumerator(void)
 {
   std::cout << "BEGIN: ***** " << __FILE__ << " *****" << std::endl;
@@ -61,5 +81,6 @@ void test_forward_enumerator(void)
   test_range_constructor();
   test_enumeration();
   test_enumeration_with_chars();
+  test_enumeration_with_step();
   std::cout << "END:   ***** " << __FILE__ << " *****" << std::endl;
 }

@@ -11,15 +11,16 @@ private:
 
   const T _idx;
   const T _end;
+  const int _step;
 
 public:
 
   forward_enumerator(void)
-  : _idx(0), _end(-1)
+  : _idx(0), _end(-1), _step(1)
   {}
 
-  forward_enumerator(const T &start, const T &end)
-  : _idx(start), _end(end)
+  forward_enumerator(const T &start, const T &end, const int step=1)
+  : _idx(start), _end(end), _step(step)
   {}
 
   T operator ()(void) const
@@ -29,7 +30,7 @@ public:
   { return _idx > _end; }
 
   forward_enumerator next(void) const
-  { return forward_enumerator(_idx+1, _end); }
+  { return forward_enumerator(_idx+_step, _end, _step); }
 
   template <typename ACC>
   using _foreach_ = mtr::foreach<forward_enumerator,ACC,T>;
