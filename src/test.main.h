@@ -66,6 +66,7 @@ void should_be_false(bool test_result,
 /* Test functions */
 
 void test_forward_enumerator(void);
+void test_backward_enumerator(void);
 void test_foreach_foreach_executor(void);
 void test_foreach_foreach(void);
 void test_fmap_fmap_executor(void);

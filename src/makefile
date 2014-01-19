@@ -19,6 +19,7 @@ TEST_MAIN_SOURCES =	$(TEST_MAIN).cpp														\
 										test.fmap.fmap_executor.cpp									\
 										test.fmap.fmap.cpp													\
 										test.enumerator.forward_enumerator.cpp			\
+										test.enumerator.backward_enumerator.cpp			\
 										test.iterators.index_forward_iterator.cpp		\
 										test.iterators.index_backward_iterator.cpp	\
 										test.string.string.cpp											\
