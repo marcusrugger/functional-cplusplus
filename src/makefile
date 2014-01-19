@@ -1,7 +1,7 @@
 
 CC=g++
-#CFLAGS=-c -O3 -DNODEBUG -pthread -std=c++11
-CFLAGS=-c -g3 -fno-inline -O0 -pthread -std=c++11
+CFLAGS=-c -O3 -DNODEBUG -pthread -std=c++11
+#CFLAGS=-c -g3 -fno-inline -O0 -pthread -std=c++11
 LDFLAGS=-pthread -std=c++11 -Wl,--no-as-needed
 
 #/usr/lib/x86_64-linux-gnu/libpthread.a
