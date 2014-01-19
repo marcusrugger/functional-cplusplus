@@ -24,7 +24,7 @@ static void test_with_string(void)
 }
 
 
-void test_iterators_fmap_executor(void)
+void test_fmap_fmap_executor(void)
 {
   std::cout << "BEGIN: ***** " << __FILE__ << " *****" << std::endl;
   test_with_string();

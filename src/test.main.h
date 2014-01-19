@@ -66,10 +66,10 @@ void should_be_false(bool test_result,
 /* Test functions */
 
 void test_forward_enumerator(void);
-void test_iterators_executor(void);
-void test_iterators_foreach(void);
-void test_iterators_fmap_executor(void);
-void test_iterators_fmap(void);
+void test_foreach_foreach_executor(void);
+void test_foreach_foreach(void);
+void test_fmap_fmap_executor(void);
+void test_fmap_fmap(void);
 void test_iterators_index_forward_iterator(void);
 void test_iterators_index_backward_iterator(void);
 void test_string_string(void);

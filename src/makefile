@@ -14,7 +14,7 @@ SOURCE_FILES =
 TEST_MAIN = test.main
 
 TEST_MAIN_SOURCES =	$(TEST_MAIN).cpp														\
-										test.foreach.executor.cpp										\
+										test.foreach.foreach_executor.cpp						\
 										test.foreach.foreach.cpp										\
 										test.fmap.fmap_executor.cpp									\
 										test.fmap.fmap.cpp													\

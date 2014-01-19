@@ -37,7 +37,7 @@ static void test_with_string(void)
 }
 
 
-void test_iterators_fmap(void)
+void test_fmap_fmap(void)
 {
   std::cout << "BEGIN: ***** " << __FILE__ << " *****" << std::endl;
   test_with_string();

@@ -17,7 +17,7 @@ static void test_with_string(void)
 }
 
 
-void test_iterators_executor(void)
+void test_foreach_foreach_executor(void)
 {
   std::cout << "BEGIN: ***** " << __FILE__ << " *****" << std::endl;
   test_with_string();
