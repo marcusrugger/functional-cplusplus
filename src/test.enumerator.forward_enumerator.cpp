@@ -27,11 +27,11 @@ static void test_range_constructor(void)
 
 static void test_enumeration(void)
 {
-  using enum_int = mtr::forward_enumerator<int>;
+  using enumerator = mtr::forward_enumerator<int>;
 
   const int start = 111;
   const int end   = 222;
-  auto e = enum_int(start, end);
+  auto e = enumerator(start, end);
 
   auto fn = [](int a, int i)->int { return a + i; };
   auto a = e.foreach(0)(fn);
@@ -45,14 +45,12 @@ static void test_enumeration_with_chars(void)
   using string = mtr::string;
   using foreach = mtr::foreach<enumerator,string,char>;
 
-  const int start = 'a';
-  const int end   = 'z';
-  auto e = enumerator(start, end);
-
+  auto en = enumerator('a', 'z');
+  auto fe = foreach(en, string());
   auto fn = [](string a, char i)->string { return a.append(i); };
-  auto f = foreach(e, string());
-  auto s = f(fn);
-  SHOULD_BE_EQ(s, string("abcdefghijklmnopqrstuvwxyz"), "Concatenation of characters");
+  auto st = fe(fn);
+
+  SHOULD_BE_EQ(st, string("abcdefghijklmnopqrstuvwxyz"), "Concatenation of characters");
 }
 
 
