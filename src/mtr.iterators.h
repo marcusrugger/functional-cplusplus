@@ -1,5 +1,7 @@
 #pragma once
 #include <memory>
+#include "mtr.foreach.h"
+#include "mtr.fmap.h"
 
 
 namespace mtr
@@ -116,9 +118,55 @@ public:
 
   template <typename ACC>
   _foreach_<ACC> foreach(const ACC &acc) const
-  {
-    return _foreach_<ACC>((*this), acc);
-  }
+  { return _foreach_<ACC>((*this), acc); }
+
+};
+
+
+template <typename STREAM, typename T>
+class input_stream_iterator
+{
+private:
+
+  const std::shared_ptr<STREAM> _stream;
+  const T _c;
+
+  input_stream_iterator(const input_stream_iterator &other, const T &c)
+  : _stream(other._stream), _c(c)
+  {}
+
+public:
+
+  input_stream_iterator(void)
+  : _stream(NULL), _c(T())
+  {}
+
+  input_stream_iterator(const input_stream_iterator &other)
+  : _stream(other._stream), _c(other._c)
+  {}
+
+  input_stream_iterator(STREAM *stream)
+  : _stream(stream), _c(_stream ? _stream->get() : T())
+  {} 
+
+  ~input_stream_iterator(void)
+  { if (_stream.unique()) _stream->close(); }
+
+  T operator()(void) const
+  { return _c; }
+
+  bool is_empty(void) const
+  { return _stream ? !_stream->good() : true; }
+
+  input_stream_iterator next(void) const
+  { return input_stream_iterator((*this), _stream ? _stream->get() : T()); }
+
+  template <typename ACC>
+  using _foreach_ = mtr::foreach<input_stream_iterator,ACC,T>;
+
+  template <typename ACC>
+  _foreach_<ACC> foreach(const ACC &acc) const
+  { return _foreach_<ACC>((*this), acc); }
 
 };
 

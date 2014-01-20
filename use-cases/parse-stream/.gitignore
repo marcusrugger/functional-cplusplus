@@ -1,6 +1,4 @@
-project-euler
-log.out
-log.err
+parse-stream
 
 # Compiled Object files
 *.slo

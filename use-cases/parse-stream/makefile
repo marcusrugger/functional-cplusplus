@@ -1,9 +1,10 @@
 
-TEMPLATE_LIBRARY = ../../src
+ROOT_DIR = ../..
+TEMPLATE_LIBRARY = $(ROOT_DIR)/src
 
 CC=g++
-CFLAGS=-c -O3 -DNODEBUG -pthread -std=c++11 -I$(TEMPLATE_LIBRARY)
-#CFLAGS=-c -g3 -fno-inline -O0 -pthread -std=c++11
+#CFLAGS=-c -O3 -DNODEBUG -pthread -std=c++11 -I$(TEMPLATE_LIBRARY)
+CFLAGS=-c -g3 -fno-inline -O0 -pthread -std=c++11 -I$(TEMPLATE_LIBRARY)
 LDFLAGS=-pthread -std=c++11 -Wl,--no-as-needed
 
 #/usr/lib/x86_64-linux-gnu/libpthread.a
@@ -13,12 +14,9 @@ LDFLAGS=-pthread -std=c++11 -Wl,--no-as-needed
 SOURCE_FILES =
 
 
-MAIN = project-euler
+MAIN = parse-stream
 
-MAIN_SOURCES =	$(MAIN).cpp				\
-								problem-001.cpp		\
-								problem-002.cpp		\
-								problem-003.cpp
+MAIN_SOURCES =	$(MAIN).cpp
 
 MAIN_OBJECTS = $(MAIN_SOURCES:.cpp=.o)
 

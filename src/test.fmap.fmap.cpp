@@ -5,11 +5,8 @@ static void test_with_string(void)
 {
   using string = mtr::string;
 
-  auto to_lower_case = [](char c)->char { return c >= 'A' && c <= 'Z' ? c+32 : c; };
-  auto to_upper_case = [](char c)->char { return c >= 'a' && c <= 'z' ? c-32 : c; };
-
-  auto count_lower_case = [](int a, char c)->int { return a + (c >= 'a' && c <= 'z' ? 1 : 0); };
-  auto count_upper_case = [](int a, char c)->int { return a + (c >= 'A' && c <= 'Z' ? 1 : 0); };
+  auto to_lower_case = [](char c)->char { return c >= 'A' && c <= 'Z' ? c-'A'+'a' : c; };
+  auto to_upper_case = [](char c)->char { return c >= 'a' && c <= 'z' ? c-'a'+'A' : c; };
 
   auto mixed_case_string = string("Hello World");
   auto lower_case_string = string("hello world");
