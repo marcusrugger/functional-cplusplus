@@ -47,13 +47,11 @@ public:
 
 int main(void)
 {
-  const auto filename = string("file");//"/home/marcus/tmp/intel_display.c");
+  const auto filename = string("/home/marcus/tmp/intel_display.c");
   auto stream = new std::ifstream(filename.c_str(), std::ifstream::in);
-  iterator it(stream);
-  auto fn = [](const line_accumulator &a, char c)->line_accumulator
-  { return a.fn(c); };
+  auto fn = [](const line_accumulator &a, char c)->line_accumulator { return a.fn(c); };
 
-  auto f = foreach(it, line_accumulator());
+  auto f = foreach(iterator(stream), line_accumulator());
   auto new_lacc = f(fn);
 
   printf("cnt: %d\n", (int) new_lacc._vector.length());

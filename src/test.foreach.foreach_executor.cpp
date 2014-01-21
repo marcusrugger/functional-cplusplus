@@ -7,7 +7,7 @@ static void test_with_string(void)
   using iterator = mtr::index_forward_iterator<string,char>;
   using executor = mtr::foreach_executor<iterator,int,char>;
 
-  auto fn = [](int a, char c)->int { return a + 1; };
+  auto fn = [](int a, char c)->int { printf("a = %d\n", a); return a + 1; };
   executor exec(fn);
   string s("Hello World");
 

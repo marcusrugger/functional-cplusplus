@@ -3,8 +3,8 @@ ROOT_DIR = ../..
 TEMPLATE_LIBRARY = $(ROOT_DIR)/src
 
 CC=g++
-#CFLAGS=-c -O3 -DNODEBUG -pthread -std=c++11 -I$(TEMPLATE_LIBRARY)
-CFLAGS=-c -g3 -fno-inline -O0 -pthread -std=c++11 -I$(TEMPLATE_LIBRARY)
+CFLAGS=-c -O3 -DNODEBUG -pthread -std=c++11 -I$(TEMPLATE_LIBRARY)
+#CFLAGS=-c -g3 -fno-inline -O0 -pthread -std=c++11 -I$(TEMPLATE_LIBRARY)
 LDFLAGS=-pthread -std=c++11 -Wl,--no-as-needed
 
 #/usr/lib/x86_64-linux-gnu/libpthread.a
