@@ -55,6 +55,9 @@ public:
   index_forward_iterator next(void) const
   { return index_forward_iterator((*this), _idx+_step); }
 
+  index_forward_iterator skip(const index a) const
+  { return index_forward_iterator((*this), _idx+a); }
+
   index to_i(void) const
   { return _idx; }
 
@@ -109,6 +112,9 @@ public:
 
   index_backward_iterator next(void) const
   { return index_backward_iterator((*this), _idx-_step); }
+
+  index_backward_iterator skip(const index a) const
+  { return index_backward_iterator((*this), _idx-a); }
 
   index to_i(void) const
   { return _idx; }
