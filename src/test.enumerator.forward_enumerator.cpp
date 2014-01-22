@@ -30,12 +30,12 @@ static void test_enumeration(void)
 {
   using enumerator = mtr::forward_enumerator<int>;
 
+  auto fn = [](int a, int i)->int { return a + i; };
+
   const int start = 111;
   const int end   = 222;
-  auto e = enumerator(start, end);
+  auto a = enumerator(start, end).foreach(0)(fn);
 
-  auto fn = [](int a, int i)->int { return a + i; };
-  auto a = e.foreach(0)(fn);
   SHOULD_BE_EQ(a, (end+1-start)*(start+end)/2, "Sum of the enumeration");
 }
 

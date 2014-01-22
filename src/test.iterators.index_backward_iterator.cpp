@@ -74,6 +74,28 @@ static void test_skip(void)
 }
 
 
+static void test_drop(void)
+{
+  using string = mtr::string;
+
+  auto cnt_fn = [](int a, char c)->int { return a + 1; };
+  auto cnt = string("Hello World").back_iterator().drop(6).foreach(0)(cnt_fn);
+
+  SHOULD_BE_EQ(cnt, 5, "Should have iterated over 5 characters");
+}
+
+
+static void test_take(void)
+{
+  using string = mtr::string;
+
+  auto cnt_fn = [](int a, char c)->int { return a + 1; };
+  auto cnt = string("Hello World").back_iterator().take(4).foreach(0)(cnt_fn);
+
+  SHOULD_BE_EQ(cnt, 4, "Should have iterated over 4 characters");
+}
+
+
 static void test_is_empty(void)
 {
   using string = mtr::string;
@@ -104,6 +126,8 @@ void test_iterators_index_backward_iterator(void)
   test_with_string_2();
   test_with_string_5();
   test_skip();
+  test_drop();
+  test_take();
   test_is_empty();
   std::cout << "END:   ***** " << __FILE__ << " *****" << std::endl;
 }

@@ -28,6 +28,10 @@ private:
   void validate_index(void) const
   { if (_idx < 0 || _idx > _end) throw std::runtime_error("index is out of range in index_forward_iterator"); }
 
+  index_forward_iterator(const index_forward_iterator &other, const index &begin, const index &end)
+  : _obj(other._obj), _begin(begin), _end(end), _idx(begin), _step(other._step)
+  {}
+
 public:
 
   index_forward_iterator(const index_forward_iterator &other)
@@ -52,11 +56,17 @@ public:
   bool is_empty(void) const
   { return _idx > _end; }
 
+  index_forward_iterator skip(const index a) const
+  { return index_forward_iterator((*this), _idx+a); }
+
   index_forward_iterator next(void) const
   { return index_forward_iterator((*this), _idx+_step); }
 
-  index_forward_iterator skip(const index a) const
-  { return index_forward_iterator((*this), _idx+a); }
+  index_forward_iterator drop(const index a) const
+  { return index_forward_iterator((*this), _begin+a, _end); }
+
+  index_forward_iterator take(const index a) const
+  { return index_forward_iterator((*this), _begin, _begin+a-1); }
 
   index to_i(void) const
   { validate_index(); return _idx; }
@@ -85,6 +95,10 @@ private:
 
   void validate_index(void) const
   { if (_idx < 0 || _idx > _end) throw std::runtime_error("index is out of range in index_backward_iterator"); }
+
+  index_backward_iterator(const index_backward_iterator &other, const index &begin, const index &end)
+  : _obj(other._obj), _begin(begin), _end(end), _idx(end), _step(other._step)
+  {}
 
 public:
 
@@ -115,6 +129,12 @@ public:
 
   index_backward_iterator skip(const index a) const
   { return index_backward_iterator((*this), _idx-a); }
+
+  index_backward_iterator drop(const index a) const
+  { return index_backward_iterator((*this), _begin, _end-a); }
+
+  index_backward_iterator take(const index a) const
+  { return index_backward_iterator((*this), _end-a+1, _end); }
 
   index to_i(void) const
   { validate_index(); return _idx; }
