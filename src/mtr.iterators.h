@@ -59,7 +59,7 @@ public:
   { return index_forward_iterator((*this), _idx+a); }
 
   index to_i(void) const
-  { return _idx; }
+  { validate_index(); return _idx; }
 
   template <typename ACC>
   using _foreach_ = mtr::foreach<index_forward_iterator,ACC,T>;
@@ -117,7 +117,7 @@ public:
   { return index_backward_iterator((*this), _idx-a); }
 
   index to_i(void) const
-  { return _idx; }
+  { validate_index(); return _idx; }
 
   template <typename ACC>
   using _foreach_ = mtr::foreach<index_backward_iterator,ACC,T>;
