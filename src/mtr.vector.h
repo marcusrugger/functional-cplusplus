@@ -71,8 +71,11 @@ protected:
 
   using _fmap_ = mtr::fmap<template_vector,forward_iterator,T>;
 
-  const T operator[](const index idx) const
-  { return _vector.get()[idx]; }  
+  void validate_index(const index idx) const
+  { if (idx < 0 || idx >= length()) throw std::runtime_error("index out of range in vector"); }
+
+  const T &operator[](const index idx) const
+  { validate_index(idx); return _vector.get()[idx]; }  
 
 public:
 
@@ -117,7 +120,16 @@ public:
     return template_vector(total_length, p);
   }
 
-  template_vector append(const T &c) const
+  template_vector push_head(const T &c) const
+  {
+    size_t total_length = length() + 1;
+    T *p = static_cast<T *> (::operator new (sizeof(T[total_length])));
+    new (&p[0]) T(c);
+    if (length() > 0) copy_vector(_vector.get(), p+1, length()-1);
+    return template_vector(total_length, p);
+  }
+
+  template_vector push_tail(const T &c) const
   {
     size_t total_length = length() + 1;
     T *p = static_cast<T *> (::operator new (sizeof(T[total_length])));
@@ -125,6 +137,12 @@ public:
     new (&p[length()]) T(c);
     return template_vector(total_length, p);
   }
+
+  const T &head(void) const
+  { return (*this)[0]; }
+
+  const T &tail(void) const
+  { return (*this)[length()-1]; }
 
 };
 

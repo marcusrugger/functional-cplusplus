@@ -132,6 +132,15 @@ static void test_wstring_operator_equality(void)
 }
 
 
+static void test_is_included(void)
+{
+  using string = mtr::string;
+
+  SHOULD_BE_TRUE(string("0123456789").is_included('8'), "8 is in the list");
+  SHOULD_BE_FALSE(string("abcdefg").is_included('8'), "8 is not in the list");
+}
+
+
 void test_string_string(void)
 {
   std::cout << "BEGIN: ***** " << __FILE__ << " *****" << std::endl;
@@ -143,5 +152,6 @@ void test_string_string(void)
   test_wstring_compare();
   test_string_operator_equality();
   test_wstring_operator_equality();
+  test_is_included();
   std::cout << "END:   ***** " << __FILE__ << " *****" << std::endl;
 }

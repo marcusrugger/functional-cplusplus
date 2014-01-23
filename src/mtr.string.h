@@ -48,6 +48,14 @@ private:
       return compare(one+1, two+1);
   }
 
+  int find(const int idx, const T &c) const
+  {
+    if (idx >= length() || (*this)[idx] == c)
+      return idx;
+    else
+      return find(idx+1, c);
+  }
+
   template_string(const T *p, size_t len)
   : _string(p), _string_length(len)
   {}
@@ -127,6 +135,9 @@ public:
   {
     return compare(other) == 0;
   }
+
+  bool is_included(const T &c) const
+  { return find(0, c) < length(); }
 
   const T* c_str(void) const
   { return _string.get(); }

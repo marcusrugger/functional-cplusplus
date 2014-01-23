@@ -31,7 +31,7 @@ clean:
 
 
 run:	$(MAIN)
-	./$(MAIN) > stdout.txt; wc stdout.txt
+	./$(MAIN)
 
 
 $(MAIN):	$(MAIN_OBJECTS)
