@@ -3,20 +3,22 @@
 
 class json_parser_base
 {
-public:
+protected:
 
   static const string number_set;
   static const string white_space_set;
 
-  const json_stack _stack;
+  const std::shared_ptr<json_stack> _stack;
 
-
-  json_parser_base(const json_parser_base &other);
+  json_parser_base(void);
 
 
 public:
 
-  json_parser_base(void);
+  static json_parser_base *create(void);
+  static json_parser_base *create(const json_parser_base *other);
+
+  json_parser_base(const json_parser_base &other);
 
 
   virtual json_parser_base *operator ()(const char c) const;

@@ -1,6 +1,10 @@
 #include "json.parser.h"
 
 
+json_parser_base *json_parser_object::create(const json_parser_base *other)
+{ return new json_parser_object(*other); }
+
+
 json_parser_object::json_parser_object(const json_parser_base &other)
 : json_parser_base(other)
 {}

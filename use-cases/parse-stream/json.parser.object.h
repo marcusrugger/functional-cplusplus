@@ -7,6 +7,8 @@ public:
 
   const json_pair_list _list;
 
+  static json_parser_base *create(const json_parser_base *other);
+
   json_parser_object(const json_parser_base &other);
   json_parser_object(const json_parser_object &other);
 
