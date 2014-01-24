@@ -17,7 +17,11 @@ SOURCE_FILES =
 
 MAIN = parse-stream
 
-MAIN_SOURCES =	$(MAIN).cpp
+MAIN_SOURCES =	$(MAIN).cpp							\
+								json.parser.base.cpp		\
+								json.parser.string.cpp	\
+								json.parser.object.cpp	\
+								json.parser.array.cpp
 
 MAIN_OBJECTS = $(MAIN_SOURCES:.cpp=.o)
 
