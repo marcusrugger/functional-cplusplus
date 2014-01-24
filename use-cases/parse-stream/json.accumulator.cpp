@@ -22,4 +22,4 @@ json_accumulator::json_accumulator(const json_parser_base *parser)
 
 
 json_accumulator json_accumulator::operator ()(const char c) const
-{ return json_accumulator( (*_stack.tail()) (_stack, c) ); }
+{ printf("json_accumulator: 0x%02x\n", c); return json_accumulator( (*_stack.tail()) (_stack, c) ); }

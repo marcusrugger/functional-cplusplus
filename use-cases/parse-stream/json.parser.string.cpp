@@ -22,7 +22,8 @@ json_stack json_parser_string::operator ()(const json_stack &stack, const char c
     throw std::runtime_error("json_parser_string: all done");
   else
   {
-    return stack.pop_tail().push_tail(new json_parser_string((*this), _string.append(c)));
+    return stack.pop_tail()
+                .push_tail(new json_parser_string((*this), _string.append(c)));
   }
 }
 
