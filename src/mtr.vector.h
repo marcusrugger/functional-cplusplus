@@ -138,6 +138,22 @@ public:
     return template_vector(total_length, p);
   }
 
+  template_vector pop_tail(void) const
+  {
+    size_t total_length = length() - 1;
+    T *p = static_cast<T *> (::operator new (sizeof(T[total_length])));
+    if (length() > 0) copy_vector(_vector.get(), p, length()-2);
+    return template_vector(total_length, p);
+  }
+
+  template_vector pop_head(void) const
+  {
+    size_t total_length = length() - 1;
+    T *p = static_cast<T *> (::operator new (sizeof(T[total_length])));
+    if (length() > 0) copy_vector(_vector.get()+1, p, length()-2);
+    return template_vector(total_length, p);
+  }
+
   const T &head(void) const
   { return (*this)[0]; }
 

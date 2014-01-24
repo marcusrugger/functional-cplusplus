@@ -6,7 +6,7 @@ const string json_parser_base::white_space_set(" \t\n\r");
 
 
 json_parser_base::json_parser_base(const json_parser_base &other)
-: _list(other._list)
+: _stack(other._stack)
 {}
 
 

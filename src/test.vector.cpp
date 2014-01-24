@@ -128,6 +128,48 @@ static void test_head_and_tail(void)
 }
 
 
+static void test_pop_tail(void)
+{
+  using string = mtr::string;
+  using vector = mtr::vector<string>;
+
+  const char *strs[] = { "string 1",
+                         "string 2",
+                         "string 3",
+                         "string 4" };
+
+  auto v = vector().push_tail(string(strs[0]))
+                   .push_tail(string(strs[1]))
+                   .push_tail(string(strs[2]))
+                   .push_tail(string(strs[3]));
+
+  SHOULD_BE_EQ(v.tail(), string(strs[3]), "tail should equal last string");
+  auto x = v.pop_tail();
+  SHOULD_BE_EQ(x.tail(), string(strs[2]), "tail should equal next to last string");
+}
+
+
+static void test_pop_head(void)
+{
+  using string = mtr::string;
+  using vector = mtr::vector<string>;
+
+  const char *strs[] = { "string 1",
+                         "string 2",
+                         "string 3",
+                         "string 4" };
+
+  auto v = vector().push_tail(string(strs[0]))
+                   .push_tail(string(strs[1]))
+                   .push_tail(string(strs[2]))
+                   .push_tail(string(strs[3]));
+
+  SHOULD_BE_EQ(v.head(), string(strs[0]), "tail should equal first string");
+  auto x = v.pop_head();
+  SHOULD_BE_EQ(x.head(), string(strs[1]), "tail should equal second string");
+}
+
+
 void test_vector(void)
 {
   std::cout << "BEGIN: ***** " << __FILE__ << " *****" << std::endl;
@@ -136,5 +178,6 @@ void test_vector(void)
   test_vector_back_iterator();
   test_append_vector();
   test_head_and_tail();
+  test_pop_tail();
   std::cout << "END:   ***** " << __FILE__ << " *****" << std::endl;
 }

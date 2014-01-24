@@ -9,7 +9,7 @@ class json_parser_object;
 class json_parser_array;
 
 using string = mtr::string;
-using json_list = mtr::vector<json_parser_base>;
+using json_stack = mtr::vector<json_parser_base>;
 using json_pair_list = mtr::vector<std::pair<string,json_parser_base>>;
 
 #include "json.parser.base.h"
