@@ -16,12 +16,14 @@ json_parser_string::json_parser_string(const json_parser_string &other, const st
 {}
 
 
-json_parser_base *json_parser_string::operator ()(const char c) const
+json_stack json_parser_string::operator ()(const json_stack &stack, const char c) const
 {
   if ('"' == c)
     throw std::runtime_error("json_parser_string: all done");
   else
-    return new json_parser_string((*this), _string.append(c));
+  {
+    return stack.pop_tail().push_tail(new json_parser_string((*this), _string.append(c)));
+  }
 }
 
 

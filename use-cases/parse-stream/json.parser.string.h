@@ -12,7 +12,7 @@ public:
   json_parser_string(const json_parser_string &other);
   json_parser_string(const json_parser_string &other, const string &s);
 
-  virtual json_parser_base *operator ()(const char c) const;
+  virtual json_stack operator ()(const json_stack &stack, const char c) const;
   virtual json_parser_base *clone(void) const;
 
 };

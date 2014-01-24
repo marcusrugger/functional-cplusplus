@@ -23,14 +23,14 @@ json_parser_base::json_parser_base(void)
 {}
 
 
-json_parser_base *json_parser_base::operator ()(const char c) const
+json_stack json_parser_base::operator ()(const json_stack &stack, const char c) const
 {
   if (white_space_set.is_included(c))
-    return json_parser_base::create(this);
+    return stack.push_tail(json_parser_base::create(this));
   else if ('{' == c)
-    return json_parser_object::create(this);
+    return stack.push_tail(json_parser_object::create(this));
   else if ('[' == c)
-    return new json_parser_array(*this);
+    return stack.push_tail(new json_parser_array(*this));
   else
     throw std::runtime_error("unexpected character in json object");
 }

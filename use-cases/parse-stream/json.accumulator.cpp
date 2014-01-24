@@ -2,7 +2,12 @@
 
 
 json_accumulator::json_accumulator(void)
-: _stack(new json_stack(json_parser_base::create()))
+: _stack(json_parser_base::create())
+{}
+
+
+json_accumulator::json_accumulator(const json_stack &stack)
+: _stack(stack)
 {}
 
 
@@ -12,9 +17,9 @@ json_accumulator::json_accumulator(const json_accumulator &other)
 
 
 json_accumulator::json_accumulator(const json_parser_base *parser)
-: _stack(new json_stack(parser))
+: _stack(parser)
 {}
 
 
 json_accumulator json_accumulator::operator ()(const char c) const
-{ return json_accumulator( (*_stack->tail()) (c) ); }
+{ return json_accumulator( (*_stack.tail()) (_stack, c) ); }

@@ -21,7 +21,7 @@ public:
   json_parser_base(const json_parser_base &other);
 
 
-  virtual json_parser_base *operator ()(const char c) const;
+  virtual json_stack operator ()(const json_stack &stack, const char c) const;
   virtual json_parser_base *clone(void) const;
 
 };

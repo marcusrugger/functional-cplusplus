@@ -3,9 +3,13 @@
 
 class json_accumulator
 {
-public:
+private:
 
-  const std::shared_ptr<const json_stack> _stack;
+  const json_stack _stack;
+
+  json_accumulator(const json_stack &);
+
+public:
 
   json_accumulator(void);
   json_accumulator(const json_accumulator &other);
