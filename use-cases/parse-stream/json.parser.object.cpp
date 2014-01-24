@@ -20,7 +20,7 @@ json_stack json_parser_object::operator ()(const json_stack &stack, const char c
   if (c == '"')
     return stack.push_tail(new json_parser_string(this));
   else if (white_space_set.is_included(c))
-    return stack.pop_tail().push_tail(new json_parser_object(*this));
+    return stack.put_tail(new json_parser_object(*this));
   else
     throw std::runtime_error("expected '\"'");
 }

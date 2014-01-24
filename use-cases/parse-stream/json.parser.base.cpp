@@ -27,7 +27,7 @@ json_stack json_parser_base::operator ()(const json_stack &stack, const char c) 
 {
   printf("json_parser_base: 0x%02x, included?: %s\n", c, white_space_set.is_included(c) ? "true" : "false");
   if (white_space_set.is_included(c))
-    return stack.pop_tail().push_tail(json_parser_base::create(this));
+    return stack.put_tail(json_parser_base::create(this));
   else if ('{' == c)
     return stack.push_tail(json_parser_object::create(this));
   else if ('[' == c)

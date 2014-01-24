@@ -170,6 +170,29 @@ static void test_pop_head(void)
 }
 
 
+static void test_put_tail(void)
+{
+  using string = mtr::string;
+  using vector = mtr::vector<string>;
+
+  const char *strs[] = { "string 1",
+                         "string 2",
+                         "string 3",
+                         "string 4" };
+
+  const char put_str[] = "put string";
+
+  auto v = vector().push_tail(string(strs[0]))
+                   .push_tail(string(strs[1]))
+                   .push_tail(string(strs[2]))
+                   .push_tail(string(strs[3]));
+
+  SHOULD_BE_EQ(v.tail(), string(strs[3]), "tail should equal last string");
+  auto x = v.put_tail(string(put_str));
+  SHOULD_BE_EQ(x.tail(), string(put_str), "tail should equal put string");
+}
+
+
 void test_vector(void)
 {
   std::cout << "BEGIN: ***** " << __FILE__ << " *****" << std::endl;
@@ -179,5 +202,6 @@ void test_vector(void)
   test_append_vector();
   test_head_and_tail();
   test_pop_tail();
+  test_put_tail();
   std::cout << "END:   ***** " << __FILE__ << " *****" << std::endl;
 }

@@ -154,6 +154,15 @@ public:
     return template_vector(total_length, p);
   }
 
+  template_vector put_tail(const T &c) const
+  {
+    size_t total_length = length();
+    T *p = static_cast<T *> (::operator new (sizeof(T[total_length])));
+    if (length() > 0) copy_vector(_vector.get(), p, length()-2);
+    new (&p[length()-1]) T(c);
+    return template_vector(total_length, p);
+  }
+
   const T &head(void) const
   { return (*this)[0]; }
 
