@@ -7,7 +7,6 @@ class json_doc_string : public json_doc_value
 {
 private:
 
-  using string = mtr::string;
   const std::shared_ptr<string> _string;
 
 

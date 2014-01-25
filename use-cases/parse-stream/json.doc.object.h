@@ -36,7 +36,6 @@ class json_doc_object : public json_doc_value
 {
 public:
 
-  using string = mtr::string;
   using pairs = mtr::vector<json_doc_object_pair>;
   using forward_iterator = mtr::index_forward_iterator<json_doc_object, json_doc_object_pair>;
 
