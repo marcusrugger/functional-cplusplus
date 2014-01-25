@@ -1,5 +1,6 @@
 #include <iostream>
 #include "mtr.foreach.h"
+#include "mtr.until.h"
 #include "mtr.fmap.h"
 #include "mtr.enumerator.h"
 #include "mtr.iterators.h"
@@ -108,6 +109,7 @@ void test_forward_enumerator(void);
 void test_backward_enumerator(void);
 void test_foreach_foreach_executor(void);
 void test_foreach_foreach(void);
+void test_until(void);
 void test_fmap_fmap(void);
 void test_iterators_index_forward_iterator(void);
 void test_iterators_index_backward_iterator(void);

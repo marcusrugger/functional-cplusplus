@@ -17,6 +17,7 @@ TEST_MAIN = test.main
 TEST_MAIN_SOURCES =	$(TEST_MAIN).cpp														\
 										test.foreach.foreach_executor.cpp						\
 										test.foreach.foreach.cpp										\
+										test.until.cpp															\
 										test.fmap.fmap.cpp													\
 										test.enumerator.forward_enumerator.cpp			\
 										test.enumerator.backward_enumerator.cpp			\

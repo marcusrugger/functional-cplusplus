@@ -62,6 +62,7 @@ int main(int argc, char **argv)
   test_foreach_foreach_executor();
   test_backward_enumerator();
   test_foreach_foreach();
+  test_until();
   test_fmap_fmap();
   test_forward_enumerator();
   test_iterators_index_forward_iterator();

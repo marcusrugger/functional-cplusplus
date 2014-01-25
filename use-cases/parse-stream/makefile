@@ -18,6 +18,8 @@ SOURCE_FILES =
 MAIN = parse-stream
 
 MAIN_SOURCES =	$(MAIN).cpp							\
+								json.doc.string.cpp			\
+								json.doc.object.cpp			\
 								json.accumulator.cpp		\
 								json.parser.base.cpp		\
 								json.parser.string.cpp	\
