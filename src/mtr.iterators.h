@@ -52,16 +52,16 @@ public:
   { return _it(); }
 
   virtual iterator<T> *next(void) const
-  { return basic_iterator(_it.next()); }
+  { return new basic_iterator(_it.next()); }
 
   virtual iterator<T> *skip(const index i) const
-  { return basic_iterator(_it.skip(i)); }
+  { return new basic_iterator(_it.skip(i)); }
 
   virtual iterator<T> *drop(const index i) const
-  { return basic_iterator(_it.drop(i)); }
+  { return new basic_iterator(_it.drop(i)); }
 
   virtual iterator<T> *take(const index i) const
-  { return basic_iterator(_it.take(i)); }
+  { return new basic_iterator(_it.take(i)); }
 
 };
 
