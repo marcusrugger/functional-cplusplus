@@ -13,6 +13,59 @@ template <typename OBJ, typename T> class index_forward_iterator;
 template <typename OBJ, typename T> class index_backward_iterator;
 
 
+template<typename T>
+class iterator
+{
+public:
+
+  virtual ~iterator(void) {}
+
+  virtual T at(const index) const = 0;
+  virtual iterator *next(void) const = 0;
+  virtual iterator *skip(const index) const = 0;
+  virtual iterator *drop(const index) const = 0;
+  virtual iterator *take(const index) const = 0;
+
+};
+
+
+template <typename IT, typename T>
+class basic_iterator : public iterator<T>
+{
+private:
+
+  const IT _it;
+
+public:
+
+  basic_iterator(void) {}
+
+  basic_iterator(const basic_iterator &other)
+  : _it(other._it)
+  {}
+
+  basic_iterator(const IT &it)
+  : _it(it)
+  {}
+
+  virtual T at(const index) const
+  { return _it(); }
+
+  virtual iterator<T> *next(void) const
+  { return basic_iterator(_it.next()); }
+
+  virtual iterator<T> *skip(const index) const
+  { return basic_iterator(_it.skip(index)); }
+
+  virtual iterator<T> *drop(const index) const
+  { return basic_iterator(_it.drop(index)); }
+
+  virtual iterator<T> *take(const index) const
+  { return basic_iterator(_it.take(index)); }
+
+};
+
+
 template <typename OBJ, typename T>
 class index_forward_iterator
 {
