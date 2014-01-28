@@ -20,7 +20,7 @@ public:
 
   virtual ~iterator(void) {}
 
-  virtual T at(const index) const = 0;
+  virtual T operator ()(void) const = 0;
   virtual iterator *next(void) const = 0;
   virtual iterator *skip(const index) const = 0;
   virtual iterator *drop(const index) const = 0;
@@ -48,20 +48,20 @@ public:
   : _it(it)
   {}
 
-  virtual T at(const index) const
+  virtual T operator ()(void) const
   { return _it(); }
 
   virtual iterator<T> *next(void) const
   { return basic_iterator(_it.next()); }
 
-  virtual iterator<T> *skip(const index) const
-  { return basic_iterator(_it.skip(index)); }
+  virtual iterator<T> *skip(const index i) const
+  { return basic_iterator(_it.skip(i)); }
 
-  virtual iterator<T> *drop(const index) const
-  { return basic_iterator(_it.drop(index)); }
+  virtual iterator<T> *drop(const index i) const
+  { return basic_iterator(_it.drop(i)); }
 
-  virtual iterator<T> *take(const index) const
-  { return basic_iterator(_it.take(index)); }
+  virtual iterator<T> *take(const index i) const
+  { return basic_iterator(_it.take(i)); }
 
 };
 
