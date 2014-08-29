@@ -10,6 +10,7 @@ void should_be_eq(T test_result, T expected_value,
                   const char *description = NULL)
 {
   if (test_result == expected_value)
+  {
     std::cout << "Success: "
               << description
               << ": "
@@ -17,6 +18,7 @@ void should_be_eq(T test_result, T expected_value,
               << " == "
               << expected_value
               << std::endl;
+  }
   else
   {
     std::cerr << "FAILURE: "
